@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="88792f31-c9d2-42fd-9c39-246dd5948413" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Categoria/CriarCategoriaDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Preco/PrecoEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/categoria/CategoriaAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/categoria/CategoriaEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/categoria/CategoriaRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/model/Preco/Preco.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/model/categoria/Categoria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/repository/CategoriaPorta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/repository/PrecoPorta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/docker/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/controllers/CriarUsuario/CriarUsuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/controllers/CriarUsuario/CriarUsuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/controllers/TelaInicial/TelaInicial.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/controllers/TelaInicial/TelaInicial.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/controllers/TelaLogin/TelaLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/controllers/TelaLogin/TelaLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/controllers/TelaProdutos/TelaProdutos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/controllers/TelaProdutos/TelaProdutos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductListaDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductListaDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductoAddDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductoAddDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/User/UserAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/User/UserAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/User/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/User/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/UseCase/Produto/ProdutoUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/UseCase/Produto/ProdutoUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/UseCase/User/UserUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/UseCase/User/UserUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/model/product/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/model/product/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/repository/UserRepositoryPorta/UserPorta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/repository/UserPorta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/repository/porta/ProdutoPorta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/repository/ProdutoPorta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/tudo/security/OpenApiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/config/security/OpenApiConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/tudo/security/SecurityConfigurations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/config/security/SecurityConfigurations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/tudo/security/SecurityFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/config/security/SecurityFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/tudo/security/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/config/security/TokenService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/tudo/services/AuthorizationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/config/services/AuthorizationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="package-info" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;mateus26guerra&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/mateus26guerra/mateus26guerra-Back-end_Site-Farmacia.git&quot;,
+    &quot;accountId&quot;: &quot;620f5a27-4316-4a31-8d61-f0178a6bdcdd&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="39H3txdcsaetAXUcUzQ1Q282B9K" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ProjetoBaseDeTelasELoginApplication.executor": "Run",
+    "Maven.projeto_base_de_telas_e_login [clean...].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/DEV/Projeto-SAAS/java/PromoFarma/projeto_base_de_telas_e_login",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean install" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="ProjetoBaseDeTelasELoginApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="projeto_base_de_telas_e_login.ProjetoBaseDeTelasELoginApplication" />
+      <module name="projeto_base_de_telas_e_login" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="projeto_base_de_telas_e_login.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ProjetoBaseDeTelasELoginApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="88792f31-c9d2-42fd-9c39-246dd5948413" name="Changes" comment="" />
+      <created>1770339387052</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1770339387052</updated>
+    </task>
+    <servers />
+  </component>
+</project>

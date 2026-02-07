@@ -1,19 +1,13 @@
 package projeto_base_de_telas_e_login.adapter.in.web.controllers.CriarUsuario;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import projeto_base_de_telas_e_login.adapter.in.web.dto.User.LoginResponseDTO;
 import projeto_base_de_telas_e_login.adapter.in.web.dto.User.RegisterDTO;
-import projeto_base_de_telas_e_login.adapter.out.persistence.User.UserEntity;
 import projeto_base_de_telas_e_login.domain.UseCase.User.UserUseCase;
-import projeto_base_de_telas_e_login.domain.model.user.UserRole;
-import projeto_base_de_telas_e_login.tudo.security.TokenService;
-import projeto_base_de_telas_e_login.adapter.out.persistence.User.UserRepository;
+import projeto_base_de_telas_e_login.config.security.TokenService;
 
 import projeto_base_de_telas_e_login.adapter.in.web.dto.User.UpdateUserDTO;
 import projeto_base_de_telas_e_login.adapter.in.web.dto.User.UserResponseDTO;

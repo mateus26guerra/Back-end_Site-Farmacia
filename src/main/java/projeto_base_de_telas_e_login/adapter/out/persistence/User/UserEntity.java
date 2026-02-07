@@ -19,7 +19,7 @@ public class UserEntity implements UserDetails {
     @GeneratedValue
     private UUID id;
 
-    @Column(name = "username") // 🔥 IMPORTANTE
+    @Column(name = "username")
     private String username;
     private String password;
 

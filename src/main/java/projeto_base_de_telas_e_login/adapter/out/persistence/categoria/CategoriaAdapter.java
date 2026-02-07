@@ -1,0 +1,38 @@
+package projeto_base_de_telas_e_login.adapter.out.persistence.categoria;
+
+import org.springframework.stereotype.Component;
+import projeto_base_de_telas_e_login.domain.model.categoria.Categoria;
+import projeto_base_de_telas_e_login.domain.repository.CategoriaPorta;
+
+import java.util.List;
+import java.util.Optional;
+
+@Component
+public class CategoriaAdapter implements CategoriaPorta {
+
+    private final CategoriaRepository repository;
+
+    public CategoriaAdapter(CategoriaRepository repository) {
+        this.repository = repository;
+    }
+
+    @Override
+    public Categoria save(Categoria categoria) {
+        CategoriaEntity entity = new CategoriaEntity(categoria);
+        CategoriaEntity saved = repository.save(entity);
+        return saved.toDomain();
+    }
+
+    @Override
+    public Optional<Categoria> findById(Integer id) {
+        return repository.findById(id).map(CategoriaEntity::toDomain);
+    }
+
+    @Override
+    public List<Categoria> findAll() {
+        return repository.findAll()
+                .stream()
+                .map(CategoriaEntity::toDomain)
+                .toList();
+    }
+}

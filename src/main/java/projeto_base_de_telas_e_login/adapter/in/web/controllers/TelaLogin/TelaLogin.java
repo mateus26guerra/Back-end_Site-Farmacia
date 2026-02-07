@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import projeto_base_de_telas_e_login.adapter.in.web.dto.User.AuthenticationDTO;
 import projeto_base_de_telas_e_login.adapter.in.web.dto.User.LoginResponseDTO;
 import projeto_base_de_telas_e_login.adapter.out.persistence.User.UserEntity;
-import projeto_base_de_telas_e_login.domain.UseCase.User.UserUseCase;
-import projeto_base_de_telas_e_login.tudo.security.TokenService;
+import projeto_base_de_telas_e_login.config.security.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

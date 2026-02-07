@@ -1,12 +1,10 @@
 package projeto_base_de_telas_e_login.domain.UseCase.User;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import projeto_base_de_telas_e_login.domain.model.user.User;
 import projeto_base_de_telas_e_login.domain.model.user.UserRole;
-import projeto_base_de_telas_e_login.domain.repository.UserRepositoryPorta.UserPorta;
+import projeto_base_de_telas_e_login.domain.repository.UserPorta;
 
 import java.util.List;
 import java.util.UUID;

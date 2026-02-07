@@ -3,7 +3,7 @@ package projeto_base_de_telas_e_login.adapter.out.persistence.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import projeto_base_de_telas_e_login.domain.model.user.User;
-import projeto_base_de_telas_e_login.domain.repository.UserRepositoryPorta.UserPorta;
+import projeto_base_de_telas_e_login.domain.repository.UserPorta;
 
 import java.util.List;
 import java.util.Optional;
