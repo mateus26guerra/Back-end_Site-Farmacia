@@ -9,7 +9,7 @@ public interface CategoriaPorta {
 
     Categoria save(Categoria categoria);
 
-    Optional<Categoria> findById(Integer id);
+    Optional<Categoria> findById(Long id);
 
     List<Categoria> findAll();
 }

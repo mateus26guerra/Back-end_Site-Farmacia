@@ -5,8 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductRepository extends JpaRepository<ProductEntity, Integer> {
-    List<ProductEntity> findByCategoria_Id(Integer categoriaId);
-    List<ProductEntity> findByCategoria_IdAndTemEmEstoqueTrue(Integer categoriaId);
-
+public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
+    List<ProductEntity> findByCategoria_Id(Long categoriaId);
+    List<ProductEntity> findByCategoria_IdAndQuantidadeEmEstoqueGreaterThan(Long categoriaId, Long quantidade);
 }

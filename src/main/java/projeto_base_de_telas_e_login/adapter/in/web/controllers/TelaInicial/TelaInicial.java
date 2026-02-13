@@ -1,13 +1,16 @@
 package projeto_base_de_telas_e_login.adapter.in.web.controllers.TelaInicial;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido.ListaDePedidoDTO;
+import projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido.PedidoAddDTO;
 import projeto_base_de_telas_e_login.adapter.in.web.dto.Product.ProductListaDto;
+import projeto_base_de_telas_e_login.domain.UseCase.Pedido.PedidoUserCase;
 import projeto_base_de_telas_e_login.domain.UseCase.Produto.ProdutoUseCase;
+import projeto_base_de_telas_e_login.domain.model.Pedido.Pedido;
 
 import java.util.List;
 
@@ -19,8 +22,11 @@ public class TelaInicial {
 
     private ProdutoUseCase produtoUseCase;
 
-    public TelaInicial(ProdutoUseCase usercaseProduto) {
-        this.produtoUseCase = usercaseProduto;
+    private PedidoUserCase pedidoUserCase;
+
+    public TelaInicial(ProdutoUseCase produtoUseCase, PedidoUserCase pedidoUserCase) {
+        this.produtoUseCase = produtoUseCase;
+        this.pedidoUserCase = pedidoUserCase;
     }
 
     @GetMapping("/testeDeApiAberta")
@@ -43,7 +49,7 @@ public class TelaInicial {
     @Operation(summary = "Lista produtos por categoria")
     @GetMapping("/list/{categoriaId}")
     public ResponseEntity<List<ProductListaDto>> getProductsByCategoria(
-            @PathVariable Integer categoriaId
+            @PathVariable Long categoriaId
     ) {
         var products = produtoUseCase.findByCategoria(categoriaId);
 
@@ -58,7 +64,7 @@ public class TelaInicial {
     @Operation(summary = "Lista produtos por categoria somente se estiverem em estoque")
     @GetMapping("/list/estoque/categoria/{categoriaId}")
     public ResponseEntity<List<ProductListaDto>> listarPorCategoriaEmEstoque(
-            @PathVariable Integer categoriaId
+            @PathVariable Long categoriaId
     ) {
         var products = produtoUseCase.listarPorCategoriaEmEstoque(categoriaId);
 
@@ -69,5 +75,23 @@ public class TelaInicial {
         return ResponseEntity.ok(dtos);
     }
 
+    @PostMapping("/pedidos")
+    public ResponseEntity<Void> criar(@RequestBody PedidoAddDTO dto) {
+        pedidoUserCase.criarPedido(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+
+    @GetMapping("/pedidos")
+    public ResponseEntity<List<ListaDePedidoDTO>> listarPedidos() {
+
+        var pedidos = pedidoUserCase.listarTodos();
+
+        var dtos = pedidos.stream()
+                .map(ListaDePedidoDTO::fromDomain)
+                .toList();
+
+        return ResponseEntity.ok(dtos);
+    }
 
 }

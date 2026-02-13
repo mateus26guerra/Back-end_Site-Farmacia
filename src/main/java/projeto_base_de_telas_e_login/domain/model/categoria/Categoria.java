@@ -6,20 +6,20 @@ import java.util.List;
 
 public class Categoria {
 
-    private Integer id;
+    private Long id;
     private String nomeCategoria;
 
     public Categoria() {
     }
 
-    public Categoria(Integer id, String nomeCategoria) {
+    public Categoria(Long id, String nomeCategoria) {
         this.id = id;
         this.nomeCategoria = nomeCategoria;
     }
 
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getNome_categoria() { return nomeCategoria; }
     public void setNome_categoria(String nomeCategoria) { this.nomeCategoria = nomeCategoria; }

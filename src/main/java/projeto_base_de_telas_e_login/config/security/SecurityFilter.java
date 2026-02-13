@@ -29,28 +29,16 @@ public class SecurityFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-        String path = request.getRequestURI();
-
-        if (
-                        path.equals("/auth/login") ||
-                        path.equals("/auth/register") ||
-                        path.startsWith("/productsPublico")||
-                        path.startsWith("/swagger-ui")
-        ) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         var token = recoverToken(request);
 
         if (token != null) {
             try {
                 var login = tokenService.validateToken(token);
+
                 if (login != null) {
                     UserDetails user = userRepository
                             .findByUsername(login)
                             .orElse(null);
-
 
                     if (user != null) {
                         var authentication =

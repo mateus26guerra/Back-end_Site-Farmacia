@@ -24,7 +24,7 @@ public class CategoriaAdapter implements CategoriaPorta {
     }
 
     @Override
-    public Optional<Categoria> findById(Integer id) {
+    public Optional<Categoria> findById(Long id) {
         return repository.findById(id).map(CategoriaEntity::toDomain);
     }
 

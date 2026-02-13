@@ -5,8 +5,6 @@ import projeto_base_de_telas_e_login.domain.model.categoria.Categoria;
 import projeto_base_de_telas_e_login.domain.model.product.Product;
 import projeto_base_de_telas_e_login.domain.repository.CategoriaPorta;
 import projeto_base_de_telas_e_login.domain.repository.ProdutoPorta;
-
-
 import java.util.List;
 
 @Service
@@ -29,18 +27,26 @@ public class ProdutoUseCase {
             throw new IllegalArgumentException("ID da categoria é obrigatório");
         }
 
-        Integer categoriaId = product.getCategoria().getId();
+        if (product.getQuantidadeEmEstoque() == null || product.getQuantidadeEmEstoque() < 0) {
+            throw new IllegalArgumentException("Quantidade em estoque inválida");
+        }
+
+        if (product.getPreco() == null) {
+            throw new IllegalArgumentException("Produto " + product.getName() + " não possui preço definido!");
+        }
+
+        Long categoriaId = product.getCategoria().getId();
 
         Categoria categoria = categoriaPorta.findById(categoriaId)
                 .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
-        // substitui a categoria fake pela real
         product.setCategoria(categoria);
 
-        produtoPorta.save(product);
+        produtoPorta.save(product); // aqui a camada de persistência vai criar ProductEntity
     }
 
-    public List<Product> findByCategoria(Integer categoriaId) {
+
+    public List<Product> findByCategoria(Long categoriaId) {
 
         if (categoriaId == null) {
             throw new IllegalArgumentException("ID da categoria é obrigatório");
@@ -49,17 +55,15 @@ public class ProdutoUseCase {
         return produtoPorta.findByCategoriaId(categoriaId);
     }
 
-    public List<Product> listarPorCategoriaEmEstoque(Integer categoriaId) {
-
+    public List<Product> listarPorCategoriaEmEstoque(Long categoriaId) {
         return produtoPorta.findByCategoriaEmEstoque(categoriaId);
     }
-
 
     public List<Product> findAll() {
         return produtoPorta.findAll();
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         produtoPorta.deleteById(id);
     }
 }

@@ -1,10 +1,10 @@
 -- =========================================
--- EXTENSÕES
+-- EXTENSÃO (UUID)
 -- =========================================
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- =========================================
--- USUÁRIOS
+-- USUÁRIOS (ADMIN)
 -- =========================================
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -25,7 +25,7 @@ ON CONFLICT (username) DO NOTHING;
 -- CATEGORIA
 -- =========================================
 CREATE TABLE IF NOT EXISTS categoria (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     nome_categoria VARCHAR(100) NOT NULL UNIQUE
 );
 
@@ -49,18 +49,20 @@ INSERT INTO precos (valor, desconto)
 VALUES
 (49.90, NULL),
 (129.90, 20.00),
-(199.90, NULL);
+(199.90, NULL)
+ON CONFLICT DO NOTHING;
 
 -- =========================================
--- PRODUTO
+-- PRODUTOS
 -- =========================================
 CREATE TABLE IF NOT EXISTS product (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    variacao VARCHAR(100) NOT NULL,
     image_url TEXT,
-    categoria_id INTEGER NOT NULL,
+    categoria_id BIGINT NOT NULL,
     preco_id BIGINT NOT NULL,
-    tem_em_estoque BOOLEAN NOT NULL DEFAULT true,
+    quantidade_em_estoque INTEGER NOT NULL CHECK (quantidade_em_estoque >= 0),
 
     CONSTRAINT fk_product_categoria
         FOREIGN KEY (categoria_id)
@@ -71,26 +73,78 @@ CREATE TABLE IF NOT EXISTS product (
         REFERENCES precos(id)
 );
 
-INSERT INTO product (name, image_url, categoria_id, preco_id, tem_em_estoque)
+INSERT INTO product (
+    name,
+    variacao,
+    image_url,
+    categoria_id,
+    preco_id,
+    quantidade_em_estoque
+)
 VALUES
 (
   'Camiseta Azul',
+  'P',
   'https://f.fcdn.app/imgs/4a9915/www.indiewears.uy/iweauy/6f82/original/catalogo/C0300_421_1/2000-2000/camiseta-a-la-base-peso-completo-azul-royal.jpg',
   1,
   1,
-  true
+  15
 ),
 (
-  'Calça Jeans',
-  'https://www.hangar33.com.br/dw/image/v2/BFCG_PRD/on/demandware.static/-/Sites-masterCatalog_Lunelli/default/dwb6a0f78c/large/hangar33-1.75755-008878-C2.jpg',
+  'Camiseta Azul',
+  'M',
+  'https://f.fcdn.app/imgs/4a9915/www.indiewears.uy/iweauy/6f82/original/catalogo/C0300_421_1/2000-2000/camiseta-a-la-base-peso-completo-azul-royal.jpg',
   1,
-  2,
-  false
+  1,
+  8
+),
+(
+  'Camiseta Azul',
+  'G',
+  'https://f.fcdn.app/imgs/4a9915/www.indiewears.uy/iweauy/6f82/original/catalogo/C0300_421_1/2000-2000/camiseta-a-la-base-peso-completo-azul-royal.jpg',
+  1,
+  1,
+  3
 ),
 (
   'Tênis Branco',
+  '42',
   'https://static.netshoes.com.br/produtos/tenis-branco-feminino-casual-estilo-shoes/14/4X9-0039-014/4X9-0039-014_zoom1.jpg',
   2,
   3,
-  true
+  5
+)
+ON CONFLICT DO NOTHING;
+
+-- =========================================
+-- PEDIDOS
+-- =========================================
+CREATE TABLE IF NOT EXISTS pedido (
+    id BIGSERIAL PRIMARY KEY,
+    criado TIMESTAMP NOT NULL,
+    cliente VARCHAR(255) NOT NULL,
+    telefone VARCHAR(30),
+    endereco TEXT NOT NULL,
+    bairro VARCHAR(50) NOT NULL,
+    complemento TEXT,
+    forma_de_pagamento VARCHAR(50) NOT NULL
+);
+
+-- =========================================
+-- PEDIDO_ITEM
+-- =========================================
+CREATE TABLE IF NOT EXISTS pedido_item (
+    id BIGSERIAL PRIMARY KEY,
+    pedido_id BIGINT NOT NULL,
+    produto_id BIGINT NOT NULL,
+    quantidade INTEGER NOT NULL,
+
+    CONSTRAINT fk_pedido_item_pedido
+        FOREIGN KEY (pedido_id)
+        REFERENCES pedido(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_pedido_item_produto
+        FOREIGN KEY (produto_id)
+        REFERENCES product(id)
 );

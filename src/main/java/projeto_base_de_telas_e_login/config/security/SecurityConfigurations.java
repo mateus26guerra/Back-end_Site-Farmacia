@@ -43,7 +43,9 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
 
                         // Produtos públicos
+                        // Produtos públicos (GET + POST)
                         .requestMatchers(HttpMethod.GET, "/productsPublico/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/productsPublico/**").permitAll()
 
                         // Produtos (USER ou ADMIN)
                         .requestMatchers(HttpMethod.POST, "/products/add_products").hasAnyRole("USER", "ADMIN")

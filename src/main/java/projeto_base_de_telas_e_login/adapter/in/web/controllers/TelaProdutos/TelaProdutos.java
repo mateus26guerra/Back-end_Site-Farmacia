@@ -56,7 +56,7 @@ public class TelaProdutos {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         produtoUseCase.deleteById(id);
         return ResponseEntity.noContent().build();
     }

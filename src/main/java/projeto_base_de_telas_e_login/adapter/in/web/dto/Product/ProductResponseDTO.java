@@ -5,7 +5,7 @@ import projeto_base_de_telas_e_login.domain.model.product.Product;
 import java.math.BigDecimal;
 
 public record ProductResponseDTO(
-        Integer id,
+        Long id,
         String name,
         BigDecimal valor,
         BigDecimal desconto,

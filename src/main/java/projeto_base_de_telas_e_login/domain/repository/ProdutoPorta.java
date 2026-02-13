@@ -11,10 +11,12 @@ public interface ProdutoPorta {
 
     List<Product> findAll();
 
-    List<Product> findByCategoriaId(Integer categoriaId);
+    List<Product> findByCategoriaId(Long categoriaId);
 
-    List<Product> findByCategoriaEmEstoque(Integer categoriaId);
+    List<Product> findByCategoriaEmEstoque(Long categoriaId);
+
+    List<Product> findAllByIds(List<Long> ids);
 
 
-    void deleteById(Integer id);
+    void deleteById(Long id);
 }

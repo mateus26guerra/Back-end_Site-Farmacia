@@ -8,7 +8,6 @@ import projeto_base_de_telas_e_login.domain.repository.ProdutoPorta;
 
 import java.util.List;
 import java.util.Optional;
-
 @Component
 public class ProductAdapter implements ProdutoPorta {
 
@@ -30,13 +29,11 @@ public class ProductAdapter implements ProdutoPorta {
             throw new IllegalArgumentException("Categoria é obrigatória");
         }
 
-        Integer categoriaId = product.getCategoria().getId();
-
-        CategoriaEntity categoriaEntity = categoriaRepository.findById(categoriaId)
+        CategoriaEntity categoriaEntity = categoriaRepository
+                .findById(product.getCategoria().getId())
                 .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
-        ProductEntity entity = new ProductEntity(product, categoriaEntity);
-
+        ProductEntity entity = new ProductEntity(product);
         repository.save(entity);
     }
 
@@ -49,7 +46,7 @@ public class ProductAdapter implements ProdutoPorta {
     }
 
     @Override
-    public List<Product> findByCategoriaId(Integer categoriaId) {
+    public List<Product> findByCategoriaId(Long categoriaId) {
         return repository.findByCategoria_Id(categoriaId)
                 .stream()
                 .map(ProductEntity::toDomain)
@@ -57,15 +54,31 @@ public class ProductAdapter implements ProdutoPorta {
     }
 
     @Override
-    public List<Product> findByCategoriaEmEstoque(Integer categoriaId) {
-        return repository.findByCategoria_IdAndTemEmEstoqueTrue(categoriaId)
+    public List<Product> findByCategoriaEmEstoque(Long categoriaId) {
+        return repository
+                .findByCategoria_IdAndQuantidadeEmEstoqueGreaterThan(categoriaId, 0L)
                 .stream()
                 .map(ProductEntity::toDomain)
                 .toList();
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public List<Product> findAllByIds(List<Long> ids) {
+
+        if (ids == null || ids.isEmpty()) {
+            throw new IllegalArgumentException("Lista de IDs de produtos não pode ser vazia");
+        }
+
+        return repository.findAllById(ids)
+                .stream()
+                .map(ProductEntity::toDomain)
+                .toList();
+    }
+
+
+    @Override
+    public void deleteById(Long id) {
         repository.deleteById(id);
     }
 }
+

@@ -8,11 +8,12 @@ import java.math.BigDecimal;
 
 public record ProductoAddDto(
         String name,
+        String variacao,
         BigDecimal valor,
         BigDecimal desconto,
         String imagemUrl,
-        Integer categoriaId,
-        Boolean temEmEstoque
+        Long categoriaId,
+        Integer  quantidadeEmEstoque
 ) {
     public Product toDomain() {
 
@@ -27,10 +28,11 @@ public record ProductoAddDto(
         return new Product(
                 null,
                 name,
+                variacao,
                 preco,
                 imagemUrl,
                 categoria,
-                temEmEstoque
+                quantidadeEmEstoque
         );
     }
 }

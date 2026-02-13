@@ -7,19 +7,23 @@ import projeto_base_de_telas_e_login.domain.model.product.Product;
 import java.math.BigDecimal;
 
 public record ProductListaDto(
-    Integer id,
-    String name,
-    Preco preco,
-    String imagemUrl,
-    Categoria categoria
+        Long id,
+        String name,
+        String variacao,
+        Preco preco,
+        String imagemUrl,
+        Categoria categoria,
+        Integer quantidadeEmEstoque
 ) {
     public static ProductListaDto fromDomain(Product product) {
         return new ProductListaDto(
                 product.getId(),
                 product.getName(),
+                product.getVariacao(),
                 product.getPreco(),
                 product.getImagemUrl(),
-                product.getCategoria()
+                product.getCategoria(),
+                product.getQuantidadeEmEstoque()
         );
     }
 }
