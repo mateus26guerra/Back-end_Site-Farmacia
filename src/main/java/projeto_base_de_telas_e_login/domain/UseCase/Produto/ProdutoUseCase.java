@@ -6,7 +6,6 @@ import projeto_base_de_telas_e_login.domain.model.product.Product;
 import projeto_base_de_telas_e_login.domain.repository.CategoriaPorta;
 import projeto_base_de_telas_e_login.domain.repository.ProdutoPorta;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProdutoUseCase {
@@ -55,29 +54,15 @@ public class ProdutoUseCase {
 
         return produtoPorta.findByCategoriaId(categoriaId);
     }
-//listarUnicosPorNome
 
-    public List<Product> findAll() {
-
-        return produtoPorta.findAll()
-                .stream()
-                .collect(Collectors.toMap(
-                        Product::getName,     // chave = nome do produto
-                        produto -> produto,   // valor = o próprio produto
-                        (p1, p2) -> p1         // se repetir, fica com o primeiro
-                ))
-                .values()
-                .stream()
-                .toList();
-    }
 
     public List<Product> listarPorCategoriaEmEstoque(Long categoriaId) {
         return produtoPorta.findByCategoriaEmEstoque(categoriaId);
     }
 
-//    public List<Product> findAll() {
-//        return produtoPorta.findAll();
-//    }
+    public List<Product> findAll() {
+        return produtoPorta.findAll();
+    }
 
     public void deleteById(Long id) {
         produtoPorta.deleteById(id);
