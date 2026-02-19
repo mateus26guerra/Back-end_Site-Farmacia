@@ -7,31 +7,20 @@ import projeto_base_de_telas_e_login.domain.model.product.Product;
 import projeto_base_de_telas_e_login.domain.repository.ProdutoPorta;
 
 import java.util.List;
-import java.util.Optional;
+
+
+
 @Component
 public class ProductAdapter implements ProdutoPorta {
 
     private final ProductRepository repository;
-    private final CategoriaRepository categoriaRepository;
 
-    public ProductAdapter(
-            ProductRepository repository,
-            CategoriaRepository categoriaRepository
-    ) {
+    public ProductAdapter(ProductRepository repository) {
         this.repository = repository;
-        this.categoriaRepository = categoriaRepository;
     }
 
     @Override
     public void save(Product product) {
-
-        if (product.getCategoria() == null || product.getCategoria().getId() == null) {
-            throw new IllegalArgumentException("Categoria é obrigatória");
-        }
-
-        CategoriaEntity categoriaEntity = categoriaRepository
-                .findById(product.getCategoria().getId())
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
         ProductEntity entity = new ProductEntity(product);
         repository.save(entity);
@@ -46,27 +35,23 @@ public class ProductAdapter implements ProdutoPorta {
     }
 
     @Override
-    public List<Product> findByCategoriaId(Long categoriaId) {
-        return repository.findByCategoria_Id(categoriaId)
+    public List<Product> findByCategoriaNome(String nomeCategoria) {
+        return repository.findByCategoria_NomeCategoria(nomeCategoria)
                 .stream()
                 .map(ProductEntity::toDomain)
                 .toList();
     }
 
     @Override
-    public List<Product> findByCategoriaEmEstoque(Long categoriaId) {
-        return repository
-                .findByCategoria_IdAndQuantidadeEmEstoqueGreaterThan(categoriaId, 0L)
-                .stream()
-                .map(ProductEntity::toDomain)
-                .toList();
+    public void deleteById(Long id) {
+        repository.deleteById(id);
     }
 
     @Override
     public List<Product> findAllByIds(List<Long> ids) {
 
         if (ids == null || ids.isEmpty()) {
-            throw new IllegalArgumentException("Lista de IDs de produtos não pode ser vazia");
+            throw new IllegalArgumentException("Lista de IDs não pode ser vazia");
         }
 
         return repository.findAllById(ids)
@@ -74,11 +59,6 @@ public class ProductAdapter implements ProdutoPorta {
                 .map(ProductEntity::toDomain)
                 .toList();
     }
-
-
-    @Override
-    public void deleteById(Long id) {
-        repository.deleteById(id);
-    }
 }
+
 

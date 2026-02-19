@@ -16,7 +16,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/register")
 public class CriarUsuario {
 
     private final UserUseCase userUseCase;
@@ -26,9 +26,7 @@ public class CriarUsuario {
         this.userUseCase = userUseCase;
         this.tokenService = tokenService;
     }
-
-    // 🔐 REGISTRO
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<LoginResponseDTO> register(
             @RequestBody @Valid RegisterDTO dto
     ) {
@@ -39,17 +37,12 @@ public class CriarUsuario {
         );
 
         var token = tokenService.generateToken(user);
-
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
-    // 🔐 LISTAR USUÁRIOS (ADMIN)
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/admin/users")
+    @GetMapping
     public ResponseEntity<List<UserResponseDTO>> listarUsuarios() {
-
-        var users = userUseCase.findAll()
-                .stream()
+        var users = userUseCase.findAll().stream()
                 .map(user -> new UserResponseDTO(
                         user.getId(),
                         user.getUsername(),
@@ -60,10 +53,7 @@ public class CriarUsuario {
         return ResponseEntity.ok(users);
     }
 
-
-    // 🔐 ATUALIZAR USUÁRIO (ADMIN)
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/admin/users/{id}")
+    @PutMapping("/users/{id}")
     public ResponseEntity<Void> atualizarUsuario(
             @PathVariable UUID id,
             @RequestBody @Valid UpdateUserDTO dto
@@ -74,7 +64,6 @@ public class CriarUsuario {
                 dto.password(),
                 dto.role()
         );
-
         return ResponseEntity.ok().build();
     }
 }

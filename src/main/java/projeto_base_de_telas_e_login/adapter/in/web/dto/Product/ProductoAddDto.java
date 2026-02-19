@@ -12,14 +12,13 @@ public record ProductoAddDto(
         BigDecimal valor,
         BigDecimal desconto,
         String imagemUrl,
-        Long categoriaId,
+        String categoriaNome,
         Integer  quantidadeEmEstoque
 ) {
     public Product toDomain() {
 
         Categoria categoria = new Categoria();
-        categoria.setId(categoriaId);
-
+        categoria.setNome_categoria(categoriaNome);
         Preco preco = new Preco(
                 valor,
                 desconto

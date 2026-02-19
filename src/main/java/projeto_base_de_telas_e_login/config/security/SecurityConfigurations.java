@@ -26,41 +26,68 @@ public class SecurityConfigurations {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .cors() // ← ESSA LINHA É ESSENCIAL
+                .cors()
                 .and()
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
                 .authorizeHttpRequests(auth -> auth
 
-                        // Swagger
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        // =====================
+                        // PUBLICO
+                        // =====================
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
 
-                        // CORS preflight
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // Auth
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
 
-                        // Produtos públicos
-                        // Produtos públicos (GET + POST)
-                        .requestMatchers(HttpMethod.GET, "/productsPublico/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/productsPublico/**").permitAll()
+                        // =====================
+                        //  tela de TelaInicial
+                        // =====================
 
-                        // Produtos (USER ou ADMIN)
-                        .requestMatchers(HttpMethod.POST, "/products/add_products").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/products/**").authenticated()
 
-                        // 🔥 ADMIN ONLY
-                        .requestMatchers(HttpMethod.POST, "/products/add_Categoria").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
+                        .requestMatchers("/productsPublico/**").permitAll()
 
-                        // Qualquer outra rota
+                        // =====================
+                        //  tela de criarUsuario
+                        // =====================
+
+                        .requestMatchers(HttpMethod.POST,"/register/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/register/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/register/**").hasRole("ADMIN")
+
+
+                        // =====================
+                        //  tela de TelaProdutos
+                        // =====================
+
+                        .requestMatchers(HttpMethod.POST,"/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/products/**").hasRole("ADMIN")
+
+                        // =====================
+                        //  tela de TelaLogin
+                        // =====================
+                        .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
+
+
+
+                        // =====================
+                        //  tela de TelaCategoria
+                        // =====================
+                        .requestMatchers(HttpMethod.POST,"/categorias/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/categorias/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/categorias/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/categorias/**").hasRole("ADMIN")
+
+                        // PADRÃO
+                        // =====================
                         .anyRequest().authenticated()
                 )
-
-
-
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

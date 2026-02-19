@@ -29,18 +29,11 @@ public class PedidoUserCase {
                 .map(ItemPedidoAddDTO::produtoId)
                 .toList();
 
-        List<Product> todos = produtoPorta.findAllByIds(List.of(1L, 2L, 3L, 4L));
-        System.out.println("Produtos encontrados manualmente: " + todos.size());
-
         List<Product> produtosBanco = produtoPorta.findAllByIds(ids);
 
-        for (Long id : ids) {
-            boolean existe = produtosBanco.stream()
-                    .anyMatch(p -> p.getId().equals(id));
-
-            if (!existe) {
-                throw new IllegalArgumentException("Produto inexistente no banco: " + id);
-            }
+        // 🔐 valida se todos existem
+        if (produtosBanco.size() != ids.size()) {
+            throw new IllegalArgumentException("Um ou mais produtos não existem");
         }
 
         var itens = dto.itens().stream().map(item -> {
@@ -74,9 +67,7 @@ public class PedidoUserCase {
         pedidoPorta.save(pedido);
     }
 
-
     public List<Pedido> listarTodos() {
         return pedidoPorta.findAll();
     }
-
 }

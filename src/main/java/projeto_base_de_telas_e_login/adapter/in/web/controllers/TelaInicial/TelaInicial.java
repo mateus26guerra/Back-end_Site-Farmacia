@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido.ListaDePedidoDTO;
 import projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido.PedidoAddDTO;
 import projeto_base_de_telas_e_login.adapter.in.web.dto.Product.ProductListaDto;
+import projeto_base_de_telas_e_login.adapter.out.persistence.categoria.CategoriaEntity;
 import projeto_base_de_telas_e_login.domain.UseCase.Pedido.PedidoUserCase;
 import projeto_base_de_telas_e_login.domain.UseCase.Produto.ProdutoUseCase;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Pedido;
+import projeto_base_de_telas_e_login.domain.model.categoria.Categoria;
+import projeto_base_de_telas_e_login.domain.repository.CategoriaPorta;
 
 import java.util.List;
 
@@ -18,80 +21,59 @@ import java.util.List;
 @RequestMapping("/productsPublico")
 public class TelaInicial {
 
+    private final ProdutoUseCase produtoUseCase;
+    private final PedidoUserCase pedidoUserCase;
+    private final CategoriaPorta categoriaPorta;
 
-
-    private ProdutoUseCase produtoUseCase;
-
-    private PedidoUserCase pedidoUserCase;
-
-    public TelaInicial(ProdutoUseCase produtoUseCase, PedidoUserCase pedidoUserCase) {
+    public TelaInicial(
+            ProdutoUseCase produtoUseCase,
+            PedidoUserCase pedidoUserCase,
+            CategoriaPorta categoriaPorta
+    ) {
         this.produtoUseCase = produtoUseCase;
         this.pedidoUserCase = pedidoUserCase;
+        this.categoriaPorta = categoriaPorta;
     }
 
-    @GetMapping("/testeDeApiAberta")
-    public String teste() {
-        return "esse Get está aberto ao público";
-    }
-
-    @Operation(summary = "Lista todos os produtos públicos")
+    @Operation(summary = "Lista todos os produtos")
     @GetMapping("/list")
-    public ResponseEntity<List<ProductListaDto>> getAllProducts() {
-
-        var products = produtoUseCase.findAll();
-        var productDtos = products.stream()
-                .map(ProductListaDto::fromDomain)
-                .toList();
-
-        return ResponseEntity.ok(productDtos);
+    public ResponseEntity<List<ProductListaDto>> listarProdutos() {
+        return ResponseEntity.ok(
+                produtoUseCase.findAll()
+                        .stream()
+                        .map(ProductListaDto::fromDomain)
+                        .toList()
+        );
     }
 
-    @Operation(summary = "Lista produtos por categoria")
-    @GetMapping("/list/{categoriaId}")
-    public ResponseEntity<List<ProductListaDto>> getProductsByCategoria(
-            @PathVariable Long categoriaId
+    @Operation(summary = "Lista produtos por nome da categoria")
+    @GetMapping("/produtos/categoria/{nome}")
+    public ResponseEntity<List<ProductListaDto>> listarPorCategoria(
+            @PathVariable String nome
     ) {
-        var products = produtoUseCase.findByCategoria(categoriaId);
-
-        var productDtos = products.stream()
-                .map(ProductListaDto::fromDomain)
-                .toList();
-
-        return ResponseEntity.ok(productDtos);
+        return ResponseEntity.ok(
+                produtoUseCase.findByCategoriaNome(nome)
+                        .stream()
+                        .map(ProductListaDto::fromDomain)
+                        .toList()
+        );
     }
 
-
-    @Operation(summary = "Lista produtos por categoria somente se estiverem em estoque")
-    @GetMapping("/list/estoque/categoria/{categoriaId}")
-    public ResponseEntity<List<ProductListaDto>> listarPorCategoriaEmEstoque(
-            @PathVariable Long categoriaId
-    ) {
-        var products = produtoUseCase.listarPorCategoriaEmEstoque(categoriaId);
-
-        var dtos = products.stream()
-                .map(ProductListaDto::fromDomain)
-                .toList();
-
-        return ResponseEntity.ok(dtos);
+    @Operation(summary = "Lista todas as categorias")
+    @GetMapping("/categorias")
+    public ResponseEntity<List<String>> listarCategorias() {
+        return ResponseEntity.ok(
+                categoriaPorta.findAll()
+                        .stream()
+                        .map(Categoria::getNome_categoria)
+                        .toList()
+        );
     }
 
     @PostMapping("/pedidos")
-    public ResponseEntity<Void> criar(@RequestBody PedidoAddDTO dto) {
+    public ResponseEntity<Void> criarPedido(@RequestBody PedidoAddDTO dto) {
         pedidoUserCase.criarPedido(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
-
-    @GetMapping("/pedidos")
-    public ResponseEntity<List<ListaDePedidoDTO>> listarPedidos() {
-
-        var pedidos = pedidoUserCase.listarTodos();
-
-        var dtos = pedidos.stream()
-                .map(ListaDePedidoDTO::fromDomain)
-                .toList();
-
-        return ResponseEntity.ok(dtos);
-    }
-
 }
+

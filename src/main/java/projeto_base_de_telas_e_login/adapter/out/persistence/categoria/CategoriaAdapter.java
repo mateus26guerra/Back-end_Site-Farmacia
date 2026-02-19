@@ -17,15 +17,15 @@ public class CategoriaAdapter implements CategoriaPorta {
     }
 
     @Override
-    public Categoria save(Categoria categoria) {
-        CategoriaEntity entity = new CategoriaEntity(categoria);
-        CategoriaEntity saved = repository.save(entity);
-        return saved.toDomain();
+    public Optional<Categoria> findById(Long id) {
+        return repository.findById(id)
+                .map(CategoriaEntity::toDomain);
     }
 
     @Override
-    public Optional<Categoria> findById(Long id) {
-        return repository.findById(id).map(CategoriaEntity::toDomain);
+    public Optional<Categoria> findByNome(String nome) { // 🔥 IMPLEMENTAR
+        return repository.findByNomeCategoria(nome)
+                .map(CategoriaEntity::toDomain);
     }
 
     @Override
@@ -35,4 +35,16 @@ public class CategoriaAdapter implements CategoriaPorta {
                 .map(CategoriaEntity::toDomain)
                 .toList();
     }
+
+    @Override
+    public Categoria save(Categoria categoria) {
+        repository.save(new CategoriaEntity(categoria));
+        return categoria;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
 }

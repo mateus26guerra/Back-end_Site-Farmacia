@@ -23,42 +23,29 @@ public class ProdutoUseCase {
 
     public void save(Product product) {
 
-        if (product.getCategoria() == null || product.getCategoria().getId() == null) {
-            throw new IllegalArgumentException("ID da categoria é obrigatório");
+        if (product.getCategoria() == null ||
+                product.getCategoria().getNome_categoria() == null) {
+            throw new IllegalArgumentException("Categoria é obrigatória");
         }
 
-        if (product.getQuantidadeEmEstoque() == null || product.getQuantidadeEmEstoque() < 0) {
-            throw new IllegalArgumentException("Quantidade em estoque inválida");
-        }
-
-        if (product.getPreco() == null) {
-            throw new IllegalArgumentException("Produto " + product.getName() + " não possui preço definido!");
-        }
-
-        Long categoriaId = product.getCategoria().getId();
-
-        Categoria categoria = categoriaPorta.findById(categoriaId)
+        Categoria categoria = categoriaPorta
+                .findByNome(product.getCategoria().getNome_categoria())
                 .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
         product.setCategoria(categoria);
 
-        produtoPorta.save(product); // aqui a camada de persistência vai criar ProductEntity
+        produtoPorta.save(product);
     }
 
+    public List<Product> findByCategoriaNome(String nomeCategoria) {
 
-    public List<Product> findByCategoria(Long categoriaId) {
-
-        if (categoriaId == null) {
-            throw new IllegalArgumentException("ID da categoria é obrigatório");
+        if (nomeCategoria == null || nomeCategoria.isBlank()) {
+            throw new IllegalArgumentException("Nome da categoria é obrigatório");
         }
 
-        return produtoPorta.findByCategoriaId(categoriaId);
+        return produtoPorta.findByCategoriaNome(nomeCategoria);
     }
 
-
-    public List<Product> listarPorCategoriaEmEstoque(Long categoriaId) {
-        return produtoPorta.findByCategoriaEmEstoque(categoriaId);
-    }
 
     public List<Product> findAll() {
         return produtoPorta.findAll();
