@@ -1,5 +1,8 @@
 package projeto_base_de_telas_e_login.domain.UseCase.Categoria;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import projeto_base_de_telas_e_login.domain.model.categoria.Categoria;
 import projeto_base_de_telas_e_login.domain.repository.CategoriaPorta;
@@ -79,6 +82,10 @@ public class CategoriaUseCase {
             );
         }
 
+        try {
         categoriaPorta.deleteById(id);
-    }
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalStateException("Categoria possui produtos vinculados.");
+        }
+}
 }

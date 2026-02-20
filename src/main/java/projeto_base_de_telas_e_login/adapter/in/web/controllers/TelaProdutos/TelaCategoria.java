@@ -43,7 +43,15 @@ public class TelaCategoria {
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Long id) {
-        categoriaUseCase.deletar(id);
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
+        try {
+            categoriaUseCase.deletar(id);
+            return ResponseEntity.ok().build();
+        } catch (IllegalStateException e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
+        }
     }
+
 }
