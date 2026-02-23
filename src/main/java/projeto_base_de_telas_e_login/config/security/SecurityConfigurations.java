@@ -69,6 +69,15 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST,"/products/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/products/**").hasRole("ADMIN")
 
+
+                        // =====================
+                        //  tela de TelaPedido
+                        // =====================
+
+                        .requestMatchers(HttpMethod.GET,"/pedidos/**").hasRole("ADMIN")
+
+
+
                         // =====================
                         //  tela de TelaLogin
                         // =====================
