@@ -1,10 +1,8 @@
 package projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido;
 
 
-import projeto_base_de_telas_e_login.adapter.out.persistence.ItemPedido.ItemPedidoEntity;
-import projeto_base_de_telas_e_login.domain.model.ItemPedido.ItemPedido;
-import projeto_base_de_telas_e_login.domain.model.Pedido.Bairro;
-import projeto_base_de_telas_e_login.domain.model.Pedido.FormaDePagamento;
+import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.Bairro;
+import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.FormaDePagamento;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Pedido;
 
 import java.util.List;

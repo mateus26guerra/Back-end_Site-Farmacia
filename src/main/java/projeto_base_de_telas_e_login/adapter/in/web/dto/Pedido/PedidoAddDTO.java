@@ -1,9 +1,10 @@
 package projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido;
 
 import projeto_base_de_telas_e_login.domain.model.ItemPedido.ItemPedido;
-import projeto_base_de_telas_e_login.domain.model.Pedido.Bairro;
-import projeto_base_de_telas_e_login.domain.model.Pedido.FormaDePagamento;
-import projeto_base_de_telas_e_login.domain.model.Pedido.Pedido;
+import projeto_base_de_telas_e_login.domain.model.Pedido.*;
+import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.Bairro;
+import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.FormaDePagamento;
+import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.TipoEntrega;
 import projeto_base_de_telas_e_login.domain.model.product.Product;
 
 import java.time.LocalDateTime;
@@ -16,13 +17,13 @@ public record PedidoAddDTO(
         Bairro bairro,
         String complemento,
         List<ItemPedidoAddDTO> itens,
-        FormaDePagamento formaDePagamento
+        FormaDePagamento formaDePagamento,
+        TipoEntrega tipoEntrega,
+        String observacao
 ) {
 
     /**
-     * ⚠️ Atenção:
-     * Aqui NÃO buscamos produto no banco.
-     * Isso deve ser feito no USE CASE / SERVICE.
+     * DTO → Domain (snapshot do pedido)
      */
     public Pedido toDomain(List<Product> produtosDoBanco) {
 
@@ -67,7 +68,9 @@ public record PedidoAddDTO(
                 bairro,
                 complemento,
                 itensPedido,
-                formaDePagamento
+                formaDePagamento,
+                tipoEntrega,
+                observacao
         );
     }
 }

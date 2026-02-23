@@ -36,38 +36,18 @@ public class PedidoUserCase {
 
         List<Product> produtosBanco = produtoPorta.findAllByIds(ids);
 
-        // 🔐 valida se todos existem
         if (produtosBanco.size() != ids.size()) {
             throw new IllegalArgumentException("Um ou mais produtos não existem");
         }
 
-        var itens = dto.itens().stream().map(item -> {
+        Pedido pedido = dto.toDomain(produtosBanco);
 
-            Product produto = produtosBanco.stream()
-                    .filter(p -> p.getId().equals(item.produtoId()))
-                    .findFirst()
-                    .orElseThrow();
+        pedido.getItens().forEach(item -> {
+            Product produto = item.getProduto();
+            produto.baixarEstoque(item.getQuantidade());
+        });
 
-            produto.baixarEstoque(item.quantidade());
-
-            return new ItemPedido(
-                    null,
-                    produto,
-                    item.quantidade()
-            );
-        }).toList();
-
-        Pedido pedido = new Pedido(
-                null,
-                LocalDateTime.now(),
-                dto.cliente(),
-                dto.telefone(),
-                dto.endereco(),
-                dto.bairro(),
-                dto.complemento(),
-                itens,
-                dto.formaDePagamento()
-        );
+        pedido.calcularTotais();
 
         pedidoPorta.save(pedido);
     }
