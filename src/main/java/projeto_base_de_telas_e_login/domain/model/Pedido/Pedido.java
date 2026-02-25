@@ -6,6 +6,7 @@ import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.FormaDePagamento;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.StatusDoPedido;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.TipoEntrega;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,13 +21,13 @@ public class Pedido {
     private FormaDePagamento formaDePagamento;
     private StatusDoPedido statusDoPedido = StatusDoPedido.Aguardando;
     private List<ItemPedido> itens;
-    private Double totalProdutos = 0.0;
-    private Double valorFrete = 0.0;
-    private Double totalComFrete = 0.0;
+    private BigDecimal totalProdutos = BigDecimal.ZERO;
+    private BigDecimal valorFrete = BigDecimal.ZERO;
+    private BigDecimal totalComFrete = BigDecimal.ZERO;
     private boolean freteGratis = false;
     private String observacao;
     private TipoEntrega tipoEntrega;
-    pri
+    private String cep;
 
     // construtor vazio (opcional)
     public Pedido() {
@@ -39,6 +40,7 @@ public class Pedido {
                   String endereco,
                   Bairro bairro,
                   String complemento,
+                  String cep,
                   List<ItemPedido> itens) {
         this.id = id;
         this.criado = criado;
@@ -46,6 +48,7 @@ public class Pedido {
         this.endereco = endereco;
         this.bairro = bairro;
         this.complemento = complemento;
+        this.cep = cep;
         this.itens = itens;
         this.statusDoPedido = StatusDoPedido.Aguardando;
     }
@@ -58,6 +61,7 @@ public class Pedido {
                   String endereco,
                   Bairro bairro,
                   String complemento,
+                  String cep,
                   List<ItemPedido> itens,
                   FormaDePagamento formaDePagamento,
                   TipoEntrega tipoEntrega,
@@ -70,6 +74,7 @@ public class Pedido {
         this.endereco = endereco;
         this.bairro = bairro;
         this.complemento = complemento;
+        this.cep = cep;
         this.itens = itens;
         this.formaDePagamento = formaDePagamento;
         this.tipoEntrega = tipoEntrega;
@@ -78,25 +83,29 @@ public class Pedido {
     }
 
     public void calcularTotais() {
-        double soma = 0.0;
+
+        BigDecimal soma = BigDecimal.ZERO;
 
         if (itens != null) {
             for (ItemPedido item : itens) {
-                soma += item.getSubtotal().doubleValue();
+                soma = soma.add(item.getSubtotal());
             }
         }
 
         this.totalProdutos = soma;
 
-        if (soma >= 15) {
-            this.valorFrete = 0.0;
+        BigDecimal valorPadraoFrete = new BigDecimal("15.00");
+        BigDecimal limiteFreteGratis = new BigDecimal("15.00");
+
+        if (soma.compareTo(limiteFreteGratis) >= 0) {
+            this.valorFrete = BigDecimal.ZERO;
             this.freteGratis = true;
         } else {
-            this.valorFrete = 15.0;
+            this.valorFrete = valorPadraoFrete;
             this.freteGratis = false;
         }
 
-        this.totalComFrete = this.totalProdutos + this.valorFrete;
+        this.totalComFrete = totalProdutos.add(valorFrete);
     }
 
     // getters e setters
@@ -130,9 +139,9 @@ public class Pedido {
     public List<ItemPedido> getItens() { return itens; }
     public void setItens(List<ItemPedido> itens) { this.itens = itens; }
 
-    public Double getTotalProdutos() { return totalProdutos; }
-    public Double getValorFrete() { return valorFrete; }
-    public Double getTotalComFrete() { return totalComFrete; }
+    public BigDecimal  getTotalProdutos() { return totalProdutos; }
+    public BigDecimal  getValorFrete() { return valorFrete; }
+    public BigDecimal  getTotalComFrete() { return totalComFrete; }
     public boolean isFreteGratis() { return freteGratis; }
 
     public String getObservacao() { return observacao; }
@@ -140,4 +149,7 @@ public class Pedido {
 
     public TipoEntrega getTipoEntrega() { return tipoEntrega; }
     public void setTipoEntrega(TipoEntrega tipoEntrega) { this.tipoEntrega = tipoEntrega; }
+
+    public String getCep() { return cep; }
+    public void setCep(String cep) { this.cep = cep; }
 }

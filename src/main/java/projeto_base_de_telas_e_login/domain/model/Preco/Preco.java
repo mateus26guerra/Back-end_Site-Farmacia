@@ -14,8 +14,19 @@ public class Preco {
     }
 
     public Preco(BigDecimal valor, BigDecimal desconto) {
-        this.valor = valor;
-        this.desconto = desconto != null ? desconto : BigDecimal.ZERO;
+
+        if (valor == null || valor.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Valor inválido");
+        }
+
+        if (desconto != null && desconto.compareTo(valor) > 0) {
+            throw new IllegalArgumentException("Desconto não pode ser maior que o valor");
+        }
+
+        this.valor = valor.setScale(2, RoundingMode.HALF_EVEN);
+        this.desconto = desconto != null
+                ? desconto.setScale(2, RoundingMode.HALF_EVEN)
+                : BigDecimal.ZERO;
     }
 
     public boolean temDesconto() {
@@ -23,9 +34,11 @@ public class Preco {
     }
 
     public BigDecimal getValorFinal() {
-        return temDesconto()
+        BigDecimal resultado = temDesconto()
                 ? valor.subtract(desconto)
                 : valor;
+
+        return resultado.setScale(2, RoundingMode.HALF_EVEN);
     }
 
     public BigDecimal getValor() {
@@ -36,7 +49,6 @@ public class Preco {
         return desconto;
     }
 
-    // 🔥 NOVO — multiplicação
     public Preco multiplicar(int quantidade) {
         BigDecimal resultado = getValorFinal()
                 .multiply(BigDecimal.valueOf(quantidade));
@@ -44,7 +56,6 @@ public class Preco {
         return new Preco(resultado.setScale(2, RoundingMode.HALF_EVEN));
     }
 
-    // 🔥 NOVO — soma
     public Preco somar(Preco outro) {
         BigDecimal resultado = this.getValorFinal()
                 .add(outro.getValorFinal());

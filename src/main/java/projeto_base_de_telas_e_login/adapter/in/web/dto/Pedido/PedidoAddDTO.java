@@ -19,7 +19,8 @@ public record PedidoAddDTO(
         List<ItemPedidoAddDTO> itens,
         FormaDePagamento formaDePagamento,
         TipoEntrega tipoEntrega,
-        String observacao
+        String observacao,
+        String cep
 ) {
 
     /**
@@ -67,10 +68,10 @@ public record PedidoAddDTO(
                 endereco,
                 bairro,
                 complemento,
+                cep,
                 itensPedido,
                 formaDePagamento,
                 tipoEntrega,
-                observacao
-        );
+                observacao);
     }
 }

@@ -46,7 +46,8 @@ public class CriarUsuario {
                 .map(user -> new UserResponseDTO(
                         user.getId(),
                         user.getUsername(),
-                        user.getRole().name()
+                        user.getRole().name(),
+                        user.getPassword()
                 ))
                 .toList();
 

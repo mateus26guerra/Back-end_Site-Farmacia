@@ -26,8 +26,8 @@ public class ItemPedido {
     }
     public BigDecimal getSubtotal() {
         return produto.getPreco()
-                .getValor()
-                .multiply(BigDecimal.valueOf(quantidade));
+                .multiplicar(quantidade)
+                .getValorFinal();
     }
 
     public Long getId() {
@@ -51,6 +51,9 @@ public class ItemPedido {
     }
 
     public void setQuantidade(Integer quantidade) {
+        if (quantidade == null || quantidade <= 0) {
+            throw new IllegalArgumentException("Quantidade inválida");
+        }
         this.quantidade = quantidade;
     }
 }

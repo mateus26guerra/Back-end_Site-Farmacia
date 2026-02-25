@@ -8,6 +8,7 @@ import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.FormaDePagamento;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.StatusDoPedido;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.TipoEntrega;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,9 +41,15 @@ public class PedidoEntity {
 
     private String observacao;
 
-    private Double totalProdutos;
-    private Double valorFrete;
-    private Double totalComFrete;
+    @Column(name = "total_produtos", precision = 10, scale = 2)
+    private BigDecimal totalProdutos;
+
+    @Column(name = "valor_frete", precision = 10, scale = 2)
+    private BigDecimal valorFrete;
+
+    @Column(name = "total_com_frete", precision = 10, scale = 2)
+    private BigDecimal totalComFrete;
+
     private Boolean freteGratis;
 
     @OneToMany(
@@ -51,6 +58,7 @@ public class PedidoEntity {
             orphanRemoval = true
     )
     private List<ItemPedidoEntity> itens;
+    private String cep;
 
     protected PedidoEntity() {}
 
@@ -72,6 +80,7 @@ public class PedidoEntity {
         this.valorFrete = pedido.getValorFrete();
         this.totalComFrete = pedido.getTotalComFrete();
         this.freteGratis = pedido.isFreteGratis();
+        this.cep = pedido.getCep();
 
         if (pedido.getItens() != null) {
             this.itens = pedido.getItens().stream()
@@ -82,23 +91,28 @@ public class PedidoEntity {
 
     // Entity → Domain
     public Pedido toDomain() {
-        Pedido pedido = new Pedido(
-                this.id,
-                this.criado,
-                this.cliente,
-                this.telefone,
-                this.endereco,
-                this.bairro,
-                this.complemento,
-                this.itens.stream()
-                        .map(ItemPedidoEntity::toDomain)
-                        .toList(),
-                this.formaDePagamento
-        );
+        Pedido pedido = new Pedido();
 
+        pedido.setId(this.id);
+        pedido.setCriado(this.criado);
+        pedido.setCliente(this.cliente);
+        pedido.setTelefone(this.telefone);
+        pedido.setEndereco(this.endereco);
+        pedido.setBairro(this.bairro);
+        pedido.setComplemento(this.complemento);
+        pedido.setCep(this.cep);
+        pedido.setFormaDePagamento(this.formaDePagamento);
         pedido.setStatusDoPedido(this.statusDoPedido);
         pedido.setTipoEntrega(this.tipoEntrega);
         pedido.setObservacao(this.observacao);
+
+        if (this.itens != null) {
+            pedido.setItens(
+                    this.itens.stream()
+                            .map(ItemPedidoEntity::toDomain)
+                            .toList()
+            );
+        }
 
         return pedido;
     }

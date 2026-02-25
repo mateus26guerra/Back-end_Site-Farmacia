@@ -57,7 +57,7 @@ public class SecurityConfigurations {
                         //  tela de criarUsuario
                         // =====================
 
-                        .requestMatchers(HttpMethod.POST,"/register/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/register/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/register/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/register/**").hasRole("ADMIN")
 
