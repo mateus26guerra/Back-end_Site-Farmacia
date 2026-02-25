@@ -2,10 +2,8 @@ package projeto_base_de_telas_e_login.adapter.in.web.controllers.telaPedido;
 
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido.AtualizarStatusPedidoDTO;
 import projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido.ListaDePedidoDTO;
 import projeto_base_de_telas_e_login.domain.UseCase.Pedido.PedidoUserCase;
 
@@ -47,5 +45,13 @@ public class TelaPedido {
                 .header("Content-Disposition", "attachment; filename=pedido-" + id + ".pdf")
                 .body(pdf);
     }
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Void> atualizarStatus(
+            @PathVariable Long id,
+            @RequestBody AtualizarStatusPedidoDTO dto
+    ) {
 
+        pedidoUserCase.atualizarStatusPedido(id, dto.getStatus());
+        return ResponseEntity.noContent().build();
+    }
 }

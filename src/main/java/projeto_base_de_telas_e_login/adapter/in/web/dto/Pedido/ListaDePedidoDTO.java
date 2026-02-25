@@ -1,13 +1,14 @@
 package projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido;
 
-
 import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.Bairro;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.FormaDePagamento;
+import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.StatusDoPedido;
+import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.TipoEntrega;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Pedido;
 
-import java.util.List;
-
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record ListaDePedidoDTO(
         Long id,
@@ -17,11 +18,21 @@ public record ListaDePedidoDTO(
         String endereco,
         Bairro bairro,
         String complemento,
+        String cep,
         FormaDePagamento formaDePagamento,
-        List<ItemPedidoDTO> itens
+        StatusDoPedido statusDoPedido,
+        TipoEntrega tipoEntrega,
+        String observacao,
+        List<ItemPedidoDTO> itens,
+        BigDecimal totalProdutos,
+        BigDecimal valorFrete,
+        BigDecimal totalComFrete,
+        boolean freteGratis
 ) {
 
     public static ListaDePedidoDTO fromDomain(Pedido pedido) {
+
+        pedido.calcularTotais(); // garante que os totais estejam atualizados
 
         List<ItemPedidoDTO> itensDto = pedido.getItens()
                 .stream()
@@ -36,8 +47,16 @@ public record ListaDePedidoDTO(
                 pedido.getEndereco(),
                 pedido.getBairro(),
                 pedido.getComplemento(),
+                pedido.getCep(),
                 pedido.getFormaDePagamento(),
-                itensDto
+                pedido.getStatusDoPedido(),
+                pedido.getTipoEntrega(),
+                pedido.getObservacao(),
+                itensDto,
+                pedido.getTotalProdutos(),
+                pedido.getValorFrete(),
+                pedido.getTotalComFrete(),
+                pedido.isFreteGratis()
         );
     }
 }

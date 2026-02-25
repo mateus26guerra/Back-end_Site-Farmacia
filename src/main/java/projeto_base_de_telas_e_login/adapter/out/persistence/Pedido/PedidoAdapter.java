@@ -1,6 +1,7 @@
 package projeto_base_de_telas_e_login.adapter.out.persistence.Pedido;
 
 import org.springframework.stereotype.Component;
+import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.StatusDoPedido;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Pedido;
 import projeto_base_de_telas_e_login.domain.repository.PedidoPorta;
 
@@ -45,5 +46,8 @@ public class PedidoAdapter implements PedidoPorta {
                 .map(PedidoEntity::toDomain)
                 .toList();
     }
-
+    @Override
+    public void atualizarStatus(Long id, StatusDoPedido status) {
+        repository.atualizarStatus(id, status);
+    }
 }

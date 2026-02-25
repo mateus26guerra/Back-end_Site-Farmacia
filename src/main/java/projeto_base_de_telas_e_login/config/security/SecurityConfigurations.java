@@ -57,7 +57,7 @@ public class SecurityConfigurations {
                         //  tela de criarUsuario
                         // =====================
 
-                        .requestMatchers(HttpMethod.POST,"/register/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/register/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET,"/register/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/register/**").hasRole("ADMIN")
 
@@ -73,8 +73,8 @@ public class SecurityConfigurations {
                         // =====================
                         //  tela de TelaPedido
                         // =====================
-
                         .requestMatchers(HttpMethod.GET,"/pedidos/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/pedidos/**").hasRole("ADMIN")
 
 
 

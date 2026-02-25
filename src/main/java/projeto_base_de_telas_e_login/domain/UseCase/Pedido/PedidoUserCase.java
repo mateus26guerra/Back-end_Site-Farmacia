@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido.ItemPedidoAddDTO;
 import projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido.PedidoAddDTO;
 import projeto_base_de_telas_e_login.domain.model.ItemPedido.ItemPedido;
+import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.StatusDoPedido;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Pedido;
 import projeto_base_de_telas_e_login.domain.model.product.Product;
 import projeto_base_de_telas_e_login.domain.repository.GeradorPdfPort;
@@ -76,5 +77,7 @@ public class PedidoUserCase {
 
         return geradorPdfPort.gerarPdfPedido(pedido);
     }
-
+    public void atualizarStatusPedido(Long id, StatusDoPedido status) {
+        pedidoPorta.atualizarStatus(id, status);
+    }
 }

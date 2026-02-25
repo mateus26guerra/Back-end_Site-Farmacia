@@ -1,5 +1,6 @@
 package projeto_base_de_telas_e_login.domain.repository;
 
+import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.StatusDoPedido;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Pedido;
 
 import java.time.LocalDateTime;
@@ -12,11 +13,13 @@ public interface PedidoPorta {
 
     List<Pedido> findAll();
 
-    Optional<Pedido> findById(Long id); // 👈 ADICIONE ISSO
+    Optional<Pedido> findById(Long id);
 
 
     List<Pedido> findByCriadoBetweenOrderByCriadoDesc(
             LocalDateTime inicio,
             LocalDateTime fim
     );
-}
+
+
+    void atualizarStatus(Long id, StatusDoPedido status);}
