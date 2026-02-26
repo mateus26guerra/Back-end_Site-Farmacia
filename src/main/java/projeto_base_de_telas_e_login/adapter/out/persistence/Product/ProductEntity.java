@@ -29,8 +29,6 @@ public class ProductEntity {
     @JoinColumn(name = "categoria_id", nullable = false)
     private CategoriaEntity categoria;
 
-    @Column(name = "quantidade_em_estoque", nullable = false)
-    private Integer quantidadeEmEstoque;
 
     public ProductEntity() {
         // JPA
@@ -44,7 +42,6 @@ public class ProductEntity {
         this.preco = new PrecoEntity(product.getPreco());
         this.imagemUrl = product.getImagemUrl();
         this.categoria = new CategoriaEntity(product.getCategoria());
-        this.quantidadeEmEstoque = product.getQuantidadeEmEstoque();
     }
 
     // Entity → Domain
@@ -55,8 +52,7 @@ public class ProductEntity {
                 this.variacao,
                 this.preco.toDomain(),
                 this.imagemUrl,
-                this.categoria.toDomain(),
-                this.quantidadeEmEstoque
+                this.categoria.toDomain()
         );
     }
     public void setId(Long id) {

@@ -5,18 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88792f31-c9d2-42fd-9c39-246dd5948413" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Pedido/AtualizarStatusPedidoDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/controllers/TelaLoja/TelaLoja.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/loja/LojaDeletarDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/loja/LojaUpdateDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Loja/LojaAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Loja/LojaEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Loja/LojaRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/UseCase/Loja/LojaUseCase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/model/Loja/Enum/TipoAtendimentoLoja.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/model/Loja/Loja.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/repository/LojaPorta.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/controllers/telaPedido/TelaPedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/controllers/telaPedido/TelaPedido.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Pedido/ListaDePedidoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Pedido/ListaDePedidoDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Pedido/PedidoAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Pedido/PedidoAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Pedido/PedidoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Pedido/PedidoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Pedido/PedidoAddDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Pedido/PedidoAddDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductListaDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductListaDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductoAddDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductoAddDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/config/security/SecurityConfigurations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/config/security/SecurityConfigurations.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/UseCase/Pedido/PedidoUserCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/UseCase/Pedido/PedidoUserCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/repository/PedidoPorta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/repository/PedidoPorta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/adapter/in/web/dto/Pedido/ListaDePedidoDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/adapter/in/web/dto/Pedido/ListaDePedidoDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/model/product/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/projeto_base_de_telas_e_login/domain/model/product/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/adapter/in/web/dto/Pedido/PedidoAddDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/adapter/in/web/dto/Pedido/PedidoAddDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductListaDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductListaDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductoAddDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/adapter/in/web/dto/Product/ProductoAddDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/adapter/out/persistence/Product/ProductRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/config/security/SecurityConfigurations$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/config/security/SecurityConfigurations$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/config/security/SecurityConfigurations.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/config/security/SecurityConfigurations.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/domain/UseCase/Pedido/PedidoUserCase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/domain/UseCase/Pedido/PedidoUserCase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/domain/model/product/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/projeto_base_de_telas_e_login/domain/model/product/Product.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +44,8 @@
       <list>
         <option value="package-info" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>

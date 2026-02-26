@@ -12,8 +12,7 @@ public record ProductListaDto(
         String variacao,
         Preco preco,
         String imagemUrl,
-        Categoria categoria,
-        Integer quantidadeEmEstoque
+        Categoria categoria
 ) {
     public static ProductListaDto fromDomain(Product product) {
         return new ProductListaDto(
@@ -22,8 +21,7 @@ public record ProductListaDto(
                 product.getVariacao(),
                 product.getPreco(),
                 product.getImagemUrl(),
-                product.getCategoria(),
-                product.getQuantidadeEmEstoque()
+                product.getCategoria()
         );
     }
 }

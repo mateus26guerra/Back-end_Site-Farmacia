@@ -45,7 +45,6 @@ public class PedidoUserCase {
 
         pedido.getItens().forEach(item -> {
             Product produto = item.getProduto();
-            produto.baixarEstoque(item.getQuantidade());
         });
 
         pedido.calcularTotais();

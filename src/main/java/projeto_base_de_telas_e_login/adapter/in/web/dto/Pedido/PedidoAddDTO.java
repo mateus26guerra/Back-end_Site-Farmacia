@@ -47,11 +47,6 @@ public record PedidoAddDTO(
                 throw new IllegalArgumentException("Quantidade inválida para o produto " + produto.getName());
             }
 
-            if (produto.getQuantidadeEmEstoque() < dto.quantidade()) {
-                throw new IllegalArgumentException(
-                        "Estoque insuficiente para o produto " + produto.getName()
-                );
-            }
 
             return new ItemPedido(
                     null,

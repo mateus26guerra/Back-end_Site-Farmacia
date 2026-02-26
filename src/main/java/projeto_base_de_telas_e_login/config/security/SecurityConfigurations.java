@@ -83,6 +83,15 @@ public class SecurityConfigurations {
                         // =====================
                         .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
 
+                        // =====================
+                        //  tela de TelaLoja
+                        // =====================
+                        .requestMatchers(HttpMethod.GET,"/lojas/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/lojas/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/lojas/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/lojas/**").hasRole("ADMIN")
+
+
 
 
                         // =====================

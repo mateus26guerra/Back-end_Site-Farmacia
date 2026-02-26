@@ -16,7 +16,6 @@ public class Product {
     private Preco preco;
 
     // Controle real de estoque
-    private Integer quantidadeEmEstoque;
 
     public Product() {
     }
@@ -27,17 +26,14 @@ public class Product {
             String variacao,
             Preco preco,
             String imagemUrl,
-            Categoria categoria,
-            Integer quantidadeEmEstoque
+            Categoria categoria
     ) {
         this.id = id;
         this.name = name;
         this.variacao = variacao;
         this.preco = preco;
         this.imagemUrl = imagemUrl;
-        this.categoria = categoria;
-        setQuantidadeEmEstoque(quantidadeEmEstoque);
-    }
+        this.categoria = categoria;}
 
     public Product(
             String name,
@@ -47,24 +43,10 @@ public class Product {
             Categoria categoria,
             Integer quantidadeEmEstoque
     ) {
-        this(null, name, variacao, preco, imagemUrl, categoria, quantidadeEmEstoque);
+        this(null, name, variacao, preco, imagemUrl, categoria );
     }
 
     // ───── Regras de domínio ─────
-
-    public boolean temEmEstoque() {
-        return quantidadeEmEstoque != null && quantidadeEmEstoque > 0;
-    }
-
-    public void baixarEstoque(int quantidade) {
-        if (quantidade <= 0) {
-            throw new IllegalArgumentException("Quantidade inválida");
-        }
-        if (quantidadeEmEstoque < quantidade) {
-            throw new IllegalArgumentException("Estoque insuficiente");
-        }
-        this.quantidadeEmEstoque -= quantidade;
-    }
 
 
 
@@ -118,17 +100,5 @@ public class Product {
         this.preco = preco;
     }
 
-    public Integer getQuantidadeEmEstoque() {
-        return quantidadeEmEstoque;
-    }
 
-    public void setQuantidadeEmEstoque(Integer quantidadeEmEstoque) {
-        if (quantidadeEmEstoque == null || quantidadeEmEstoque < 0) {
-            throw new IllegalArgumentException("Estoque não pode ser negativo");
-        }
-        this.quantidadeEmEstoque = quantidadeEmEstoque;
-    }
-    public boolean isEmEstoque() {
-        return quantidadeEmEstoque != null && quantidadeEmEstoque > 0;
-    }
 }

@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     List<ProductEntity> findByCategoria_Id(Long categoriaId);
-    List<ProductEntity> findByCategoria_IdAndQuantidadeEmEstoqueGreaterThan(Long categoriaId, Long quantidade);
     List<ProductEntity> findByCategoria_NomeCategoria(String nomeCategoria);
 
 }
