@@ -48,4 +48,12 @@ public class TelaLoja {
         Loja lojaAtualizada = lojaUseCase.atualizarLoja(id, dto);
         return ResponseEntity.ok(lojaAtualizada);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Loja> buscarPorId(@PathVariable Long id) {
+        Loja loja = lojaUseCase.buscarPorId(id);
+        return ResponseEntity.ok(loja);
+    }
+
+
 }

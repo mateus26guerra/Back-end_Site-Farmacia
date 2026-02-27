@@ -33,4 +33,9 @@ public class LojaUseCase {
         Loja lojaAtualizada = dto.toDomain();
         return lojaPorta.update(id, lojaAtualizada);
     }
+
+    public Loja buscarPorId(Long id) {
+        return lojaPorta.findById(id)
+                .orElseThrow(() -> new RuntimeException("Loja não encontrada"));
+    }
 }
