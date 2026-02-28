@@ -10,7 +10,6 @@ public record ProductListaDto(
         Long id,
         String name,
         String variacao,
-        Preco preco,
         String imagemUrl,
         Categoria categoria
 ) {
@@ -19,7 +18,6 @@ public record ProductListaDto(
                 product.getId(),
                 product.getName(),
                 product.getVariacao(),
-                product.getPreco(),
                 product.getImagemUrl(),
                 product.getCategoria()
         );

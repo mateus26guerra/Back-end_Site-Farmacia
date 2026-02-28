@@ -13,92 +13,52 @@ public class Product {
 
     private String imagemUrl;
     private Categoria categoria;
-    private Preco preco;
 
-    // Controle real de estoque
+    // Adicionamos o preço do produto
+    private Preco precoVenda;
 
-    public Product() {
-    }
+    public Product() {}
 
     public Product(
             Long id,
             String name,
             String variacao,
-            Preco preco,
             String imagemUrl,
-            Categoria categoria
+            Categoria categoria,
+            Preco precoVenda
     ) {
         this.id = id;
         this.name = name;
         this.variacao = variacao;
-        this.preco = preco;
         this.imagemUrl = imagemUrl;
-        this.categoria = categoria;}
+        this.categoria = categoria;
+        this.precoVenda = precoVenda;
+    }
 
     public Product(
             String name,
             String variacao,
-            Preco preco,
             String imagemUrl,
             Categoria categoria,
-            Integer quantidadeEmEstoque
+            Preco precoVenda
     ) {
-        this(null, name, variacao, preco, imagemUrl, categoria );
+        this(null, name, variacao, imagemUrl, categoria, precoVenda);
     }
-
-    // ───── Regras de domínio ─────
-
-
 
     // ───── Getters e Setters ─────
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getName() {
-        return name;
-    }
+    public String getVariacao() { return variacao; }
+    public String getImagemUrl() { return imagemUrl; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public Categoria getCategoria() { return categoria; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
 
-    public String getVariacao() {
-        return variacao;
-    }
-
-    public void setVariacao(String variacao) {
-        this.variacao = variacao;
-    }
-
-    public String getImagemUrl() {
-        return imagemUrl;
-    }
-
-    public void setImagemUrl(String imagemUrl) {
-        this.imagemUrl = imagemUrl;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    public Preco getPreco() {
-        return preco;
-    }
-
-    public void setPreco(Preco preco) {
-        this.preco = preco;
-    }
-
-
+    public Preco getPrecoVenda() { return precoVenda; }
+    public void setPrecoVenda(Preco precoVenda) { this.precoVenda = precoVenda; }
 }

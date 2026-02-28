@@ -1,155 +1,190 @@
 package projeto_base_de_telas_e_login.domain.model.Pedido;
 
 import projeto_base_de_telas_e_login.domain.model.ItemPedido.ItemPedido;
-import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.Bairro;
-import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.FormaDePagamento;
+import projeto_base_de_telas_e_login.domain.model.Loja.Loja;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.StatusDoPedido;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.TipoEntrega;
+import projeto_base_de_telas_e_login.domain.model.Preco.Preco;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Pedido {
+
     private Long id;
-    private LocalDateTime criado;
-    private String cliente;
+    private Loja loja;
+
+    private String nomeCliente;
     private String telefone;
     private String endereco;
-    private Bairro bairro;
-    private String complemento;
-    private FormaDePagamento formaDePagamento;
-    private StatusDoPedido statusDoPedido = StatusDoPedido.Aguardando;
-    private List<ItemPedido> itens;
-    private BigDecimal totalProdutos = BigDecimal.ZERO;
-    private BigDecimal valorFrete = BigDecimal.ZERO;
-    private BigDecimal totalComFrete = BigDecimal.ZERO;
-    private boolean freteGratis = false;
-    private String observacao;
+    private String bairro;
+
+    private Preco totalProdutos;
+    private Preco valorFrete;
+    private Preco totalFinal;
+
     private TipoEntrega tipoEntrega;
-    private String cep;
+    private StatusDoPedido status;
+    private LocalDateTime criadoEm;
 
-    // construtor vazio (opcional)
-    public Pedido() {
-    }
+    private List<ItemPedido> itens;
 
-    // construtor básico
-    public Pedido(Long id,
-                  LocalDateTime criado,
+    private Boolean freteGratis = false;
+
+    public Pedido(Loja loja,
+                  String nomeCliente,
                   String telefone,
                   String endereco,
-                  Bairro bairro,
-                  String complemento,
-                  String cep,
-                  List<ItemPedido> itens) {
-        this.id = id;
-        this.criado = criado;
-        this.telefone = telefone;
-        this.endereco = endereco;
-        this.bairro = bairro;
-        this.complemento = complemento;
-        this.cep = cep;
-        this.itens = itens;
-        this.statusDoPedido = StatusDoPedido.Aguardando;
-    }
-
-    // construtor completo
-    public Pedido(Long id,
-                  LocalDateTime criado,
-                  String cliente,
-                  String telefone,
-                  String endereco,
-                  Bairro bairro,
-                  String complemento,
-                  String cep,
-                  List<ItemPedido> itens,
-                  FormaDePagamento formaDePagamento,
+                  String bairro,
                   TipoEntrega tipoEntrega,
-                  String observacao) {
+                  List<ItemPedido> itens) {
 
-        this.id = id;
-        this.criado = criado;
-        this.cliente = cliente;
+        if (tipoEntrega == TipoEntrega.ENTREGA && !loja.aceitaEntrega()) {
+            throw new IllegalArgumentException("Loja não aceita entrega");
+        }
+
+        if (tipoEntrega == TipoEntrega.RETIRADA && !loja.aceitaRetirada()) {
+            throw new IllegalArgumentException("Loja não aceita retirada");
+        }
+
+        this.loja = loja;
+        this.nomeCliente = nomeCliente;
         this.telefone = telefone;
         this.endereco = endereco;
         this.bairro = bairro;
-        this.complemento = complemento;
-        this.cep = cep;
-        this.itens = itens;
-        this.formaDePagamento = formaDePagamento;
         this.tipoEntrega = tipoEntrega;
-        this.observacao = observacao;
-        this.statusDoPedido = StatusDoPedido.Aguardando;
+        this.itens = itens;
+
+        this.status = StatusDoPedido.AGUARDANDO;
+        this.criadoEm = LocalDateTime.now();
+
+        calcularTotais();
     }
 
-    public void calcularTotais() {
+    private void calcularTotais() {
+        Preco soma = new Preco(java.math.BigDecimal.ZERO);
 
-        BigDecimal soma = BigDecimal.ZERO;
-
-        if (itens != null) {
-            for (ItemPedido item : itens) {
-                soma = soma.add(item.getSubtotal());
-            }
+        for (ItemPedido item : itens) {
+            soma = soma.somar(item.getSubtotal());
         }
 
         this.totalProdutos = soma;
-
-        BigDecimal valorPadraoFrete = new BigDecimal("15.00");
-        BigDecimal limiteFreteGratis = new BigDecimal("15.00");
-
-        if (soma.compareTo(limiteFreteGratis) >= 0) {
-            this.valorFrete = BigDecimal.ZERO;
-            this.freteGratis = true;
-        } else {
-            this.valorFrete = valorPadraoFrete;
-            this.freteGratis = false;
-        }
-
-        this.totalComFrete = totalProdutos.add(valorFrete);
+        this.valorFrete = new Preco(java.math.BigDecimal.ZERO);
+        this.totalFinal = totalProdutos;
     }
 
-    // getters e setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public void aplicarFrete(Preco frete) {
+        this.valorFrete = frete;
+        this.totalFinal = totalProdutos.somar(frete);
+    }
 
-    public LocalDateTime getCriado() { return criado; }
-    public void setCriado(LocalDateTime criado) { this.criado = criado; }
+    public void setFreteGratis(Boolean freteGratis) { this.freteGratis = freteGratis; }
 
-    public String getCliente() { return cliente; }
-    public void setCliente(String cliente) { this.cliente = cliente; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getTelefone() { return telefone; }
-    public void setTelefone(String telefone) { this.telefone = telefone; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getEndereco() { return endereco; }
-    public void setEndereco(String endereco) { this.endereco = endereco; }
+    public Loja getLoja() {
+        return loja;
+    }
 
-    public Bairro getBairro() { return bairro; }
-    public void setBairro(Bairro bairro) { this.bairro = bairro; }
+    public void setLoja(Loja loja) {
+        this.loja = loja;
+    }
 
-    public String getComplemento() { return complemento; }
-    public void setComplemento(String complemento) { this.complemento = complemento; }
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
 
-    public FormaDePagamento getFormaDePagamento() { return formaDePagamento; }
-    public void setFormaDePagamento(FormaDePagamento formaDePagamento) { this.formaDePagamento = formaDePagamento; }
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
 
-    public StatusDoPedido getStatusDoPedido() { return statusDoPedido; }
-    public void setStatusDoPedido(StatusDoPedido statusDoPedido) { this.statusDoPedido = statusDoPedido; }
+    public String getTelefone() {
+        return telefone;
+    }
 
-    public List<ItemPedido> getItens() { return itens; }
-    public void setItens(List<ItemPedido> itens) { this.itens = itens; }
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
 
-    public BigDecimal  getTotalProdutos() { return totalProdutos; }
-    public BigDecimal  getValorFrete() { return valorFrete; }
-    public BigDecimal  getTotalComFrete() { return totalComFrete; }
-    public boolean isFreteGratis() { return freteGratis; }
+    public String getEndereco() {
+        return endereco;
+    }
 
-    public String getObservacao() { return observacao; }
-    public void setObservacao(String observacao) { this.observacao = observacao; }
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
 
-    public TipoEntrega getTipoEntrega() { return tipoEntrega; }
-    public void setTipoEntrega(TipoEntrega tipoEntrega) { this.tipoEntrega = tipoEntrega; }
+    public String getBairro() {
+        return bairro;
+    }
 
-    public String getCep() { return cep; }
-    public void setCep(String cep) { this.cep = cep; }
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public Preco getTotalProdutos() {
+        return totalProdutos;
+    }
+
+    public void setTotalProdutos(Preco totalProdutos) {
+        this.totalProdutos = totalProdutos;
+    }
+
+    public Preco getValorFrete() {
+        return valorFrete;
+    }
+
+    public void setValorFrete(Preco valorFrete) {
+        this.valorFrete = valorFrete;
+    }
+
+    public Preco getTotalFinal() {
+        return totalFinal;
+    }
+
+    public void setTotalFinal(Preco totalFinal) {
+        this.totalFinal = totalFinal;
+    }
+
+    public TipoEntrega getTipoEntrega() {
+        return tipoEntrega;
+    }
+
+    public void setTipoEntrega(TipoEntrega tipoEntrega) {
+        this.tipoEntrega = tipoEntrega;
+    }
+
+    public StatusDoPedido getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusDoPedido status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCriadoEm() {
+        return criadoEm;
+    }
+
+    public void setCriadoEm(LocalDateTime criadoEm) {
+        this.criadoEm = criadoEm;
+    }
+
+    public List<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemPedido> itens) {
+        this.itens = itens;
+    }
+
+    public Boolean getFreteGratis() {
+        return freteGratis;
+    }
 }

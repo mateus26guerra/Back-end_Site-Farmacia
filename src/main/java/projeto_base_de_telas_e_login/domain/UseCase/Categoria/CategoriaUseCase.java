@@ -1,8 +1,6 @@
 package projeto_base_de_telas_e_login.domain.UseCase.Categoria;
 
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import projeto_base_de_telas_e_login.domain.model.categoria.Categoria;
 import projeto_base_de_telas_e_login.domain.repository.CategoriaPorta;
@@ -46,12 +44,9 @@ public class CategoriaUseCase {
                 });
 
         Categoria categoria = new Categoria();
-        categoria.setNome_categoria(nome);
+        categoria.setNomeCategoria(nome);  // ✅ ajustado
 
         return categoriaPorta.save(categoria);
-
-
-
     }
 
     // 🔹 EDITAR
@@ -60,13 +55,13 @@ public class CategoriaUseCase {
         Categoria categoria = categoriaPorta.findById(id)
                 .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
-        if (CATEGORIAS_PROTEGIDAS.contains(categoria.getNome_categoria())) {
+        if (CATEGORIAS_PROTEGIDAS.contains(categoria.getNomeCategoria())) {  // ✅ ajustado
             throw new IllegalStateException(
                     "Essa categoria é fundamental e não pode ser editada"
             );
         }
 
-        categoria.setNome_categoria(novoNome);
+        categoria.setNomeCategoria(novoNome);  // ✅ ajustado
         return categoriaPorta.save(categoria);
     }
 
@@ -76,16 +71,16 @@ public class CategoriaUseCase {
         Categoria categoria = categoriaPorta.findById(id)
                 .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
-        if (CATEGORIAS_PROTEGIDAS.contains(categoria.getNome_categoria())) {
+        if (CATEGORIAS_PROTEGIDAS.contains(categoria.getNomeCategoria())) {  // ✅ ajustado
             throw new IllegalStateException(
                     "Essa categoria é fundamental e não pode ser deletada"
             );
         }
 
         try {
-        categoriaPorta.deleteById(id);
+            categoriaPorta.deleteById(id);
         } catch (DataIntegrityViolationException e) {
             throw new IllegalStateException("Categoria possui produtos vinculados.");
         }
-}
+    }
 }

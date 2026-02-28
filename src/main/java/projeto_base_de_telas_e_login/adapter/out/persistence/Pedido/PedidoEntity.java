@@ -1,119 +1,125 @@
-package projeto_base_de_telas_e_login.adapter.out.persistence.Pedido;
-
-import jakarta.persistence.*;
-import projeto_base_de_telas_e_login.adapter.out.persistence.ItemPedido.ItemPedidoEntity;
-import projeto_base_de_telas_e_login.domain.model.Pedido.*;
-import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.Bairro;
-import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.FormaDePagamento;
-import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.StatusDoPedido;
-import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.TipoEntrega;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
-
-@Entity
-@Table(name = "pedido")
-public class PedidoEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private LocalDateTime criado;
-    private String cliente;
-    private String telefone;
-    private String endereco;
-
-    @Enumerated(EnumType.STRING)
-    private Bairro bairro;
-
-    private String complemento;
-
-    @Enumerated(EnumType.STRING)
-    private FormaDePagamento formaDePagamento;
-
-    @Enumerated(EnumType.STRING)
-    private StatusDoPedido statusDoPedido;
-
-    @Enumerated(EnumType.STRING)
-    private TipoEntrega tipoEntrega;
-
-    private String observacao;
-
-    @Column(name = "total_produtos", precision = 10, scale = 2)
-    private BigDecimal totalProdutos;
-
-    @Column(name = "valor_frete", precision = 10, scale = 2)
-    private BigDecimal valorFrete;
-
-    @Column(name = "total_com_frete", precision = 10, scale = 2)
-    private BigDecimal totalComFrete;
-
-    private Boolean freteGratis;
-
-    @OneToMany(
-            mappedBy = "pedido",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<ItemPedidoEntity> itens;
-    private String cep;
-
-    protected PedidoEntity() {}
-
-    // Domain → Entity (salva snapshot do pedido)
-    public PedidoEntity(Pedido pedido) {
-        this.id = pedido.getId();
-        this.criado = pedido.getCriado();
-        this.cliente = pedido.getCliente();
-        this.telefone = pedido.getTelefone();
-        this.endereco = pedido.getEndereco();
-        this.bairro = pedido.getBairro();
-        this.complemento = pedido.getComplemento();
-        this.formaDePagamento = pedido.getFormaDePagamento();
-        this.statusDoPedido = pedido.getStatusDoPedido();
-        this.tipoEntrega = pedido.getTipoEntrega();
-        this.observacao = pedido.getObservacao();
-
-        this.totalProdutos = pedido.getTotalProdutos();
-        this.valorFrete = pedido.getValorFrete();
-        this.totalComFrete = pedido.getTotalComFrete();
-        this.freteGratis = pedido.isFreteGratis();
-        this.cep = pedido.getCep();
-
-        if (pedido.getItens() != null) {
-            this.itens = pedido.getItens().stream()
-                    .map(item -> new ItemPedidoEntity(item, this))
-                    .toList();
-        }
-    }
-
-    // Entity → Domain
-    public Pedido toDomain() {
-        Pedido pedido = new Pedido();
-
-        pedido.setId(this.id);
-        pedido.setCriado(this.criado);
-        pedido.setCliente(this.cliente);
-        pedido.setTelefone(this.telefone);
-        pedido.setEndereco(this.endereco);
-        pedido.setBairro(this.bairro);
-        pedido.setComplemento(this.complemento);
-        pedido.setCep(this.cep);
-        pedido.setFormaDePagamento(this.formaDePagamento);
-        pedido.setStatusDoPedido(this.statusDoPedido);
-        pedido.setTipoEntrega(this.tipoEntrega);
-        pedido.setObservacao(this.observacao);
-
-        if (this.itens != null) {
-            pedido.setItens(
-                    this.itens.stream()
-                            .map(ItemPedidoEntity::toDomain)
-                            .toList()
-            );
-        }
-
-        return pedido;
-    }
-}
+//package projeto_base_de_telas_e_login.adapter.out.persistence.Pedido;
+//
+//import jakarta.persistence.*;
+//import projeto_base_de_telas_e_login.adapter.out.persistence.ItemPedido.ItemPedidoEntity;
+//import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.StatusDoPedido;
+//import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.TipoEntrega;
+//import projeto_base_de_telas_e_login.domain.model.Pedido.Pedido;
+//
+//import java.math.BigDecimal;
+//import java.time.LocalDateTime;
+//import java.util.List;
+//
+//@Entity
+//@Table(name = "pedido")
+//public class PedidoEntity {
+//
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+//
+//    private Long lojaId;
+//
+//    private LocalDateTime criadoEm;
+//
+//    private String nomeCliente;
+//    private String telefone;
+//    private String endereco;
+//    private String bairro;
+//
+//    @Enumerated(EnumType.STRING)
+//    private StatusDoPedido status;
+//
+//    @Enumerated(EnumType.STRING)
+//    private TipoEntrega tipoEntrega;
+//
+//    @Column(precision = 10, scale = 2)
+//    private BigDecimal totalProdutos;
+//
+//    @Column(precision = 10, scale = 2)
+//    private BigDecimal valorFrete;
+//
+//    @Column(precision = 10, scale = 2)
+//    private BigDecimal totalFinal;
+//
+//    private Boolean freteGratis;
+//
+//    @OneToMany(
+//            mappedBy = "pedido",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true
+//    )
+//    private List<ItemPedidoEntity> itens;
+//
+//    protected PedidoEntity() {}
+//
+//    // DOMAIN → ENTITY
+//    public PedidoEntity(Pedido pedido) {
+//        this.id = pedido.getId();
+//        this.lojaId = pedido.getLoja().getId(); // pega id da loja
+//        this.criadoEm = pedido.getCriadoEm();
+//        this.nomeCliente = pedido.getNomeCliente();
+//        this.telefone = pedido.getTelefone();
+//        this.endereco = pedido.getEndereco();
+//        this.bairro = pedido.getBairro();
+//        this.status = pedido.getStatus();
+//        this.tipoEntrega = pedido.getTipoEntrega();
+//
+//        // Pega valores de Preco
+//        this.totalProdutos = pedido.getTotalProdutos().getValor();
+//        this.valorFrete = pedido.getValorFrete().getValor();
+//        this.totalFinal = pedido.getTotalFinal().getValor();
+//
+//        this.freteGratis = pedido.getFreteGratis();
+//
+//        if (pedido.getItens() != null) {
+//            this.itens = pedido.getItens()
+//                    .stream()
+//                    .map(item -> new ItemPedidoEntity(item, this))
+//                    .toList();
+//        }
+//    }
+//
+//    // ENTITY → DOMAIN
+//    public Pedido toDomain() {
+//
+//        var itensDomain = this.itens.stream()
+//                .map(ItemPedidoEntity::toDomain)
+//                .toList();
+//
+//        // Como o Domain agora usa Loja completo, aqui você precisará só do id da loja
+//        // Pode criar um stub simples ou buscar via repository
+//        var lojaStub = new projeto_base_de_telas_e_login.domain.model.Loja.Loja();
+//        lojaStub.setId(this.lojaId);
+//
+//        Pedido pedido = new Pedido(
+//                lojaStub,
+//                this.nomeCliente,
+//                this.telefone,
+//                this.endereco,
+//                this.bairro,
+//                this.tipoEntrega,
+//                itensDomain
+//        );
+//
+//        // Aplicar valores de Preco
+//        pedido.aplicarFrete(new projeto_base_de_telas_e_login.domain.model.Preco.Preco(this.valorFrete));
+//        return pedido;
+//    }
+//
+//    // GETTERS básicos
+//    public Long getId() { return id; }
+//    public Long getLojaId() { return lojaId; }
+//    public LocalDateTime getCriadoEm() { return criadoEm; }
+//    public String getNomeCliente() { return nomeCliente; }
+//    public String getTelefone() { return telefone; }
+//    public String getEndereco() { return endereco; }
+//    public String getBairro() { return bairro; }
+//    public StatusDoPedido getStatus() { return status; }
+//    public TipoEntrega getTipoEntrega() { return tipoEntrega; }
+//    public BigDecimal getTotalProdutos() { return totalProdutos; }
+//    public BigDecimal getValorFrete() { return valorFrete; }
+//    public BigDecimal getTotalFinal() { return totalFinal; }
+//    public Boolean getFreteGratis() { return freteGratis; }
+//    public List<ItemPedidoEntity> getItens() { return itens; }
+//}

@@ -9,25 +9,24 @@ import java.math.BigDecimal;
 public record ProductoAddDto(
         String name,
         String variacao,
-        BigDecimal valor,
-        BigDecimal desconto,
         String imagemUrl,
-        String categoriaNom) {
+        String categoriaNom,
+        BigDecimal preco // 👈 adicionamos o preco no DTO
+) {
+
     public Product toDomain() {
 
         Categoria categoria = new Categoria();
-        Preco preco = new Preco(
-                valor,
-                desconto
-        );
+        categoria.setNomeCategoria(categoriaNom);
+
+        Preco precoVenda = new Preco(preco); // converter BigDecimal para Preco
 
         return new Product(
-                null,
                 name,
                 variacao,
-                preco,
                 imagemUrl,
-                categoria
+                categoria,
+                precoVenda
         );
     }
 }

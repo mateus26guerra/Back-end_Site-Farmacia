@@ -1,81 +1,85 @@
 package projeto_base_de_telas_e_login.domain.model.Loja;
 
+
 import projeto_base_de_telas_e_login.domain.model.Loja.Enum.TipoAtendimentoLoja;
 
-import java.util.Objects;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Loja {
 
     private Long id;
     private String nome;
-    private String cep;
-    private String cnpj;
-    private String telefone;
     private TipoAtendimentoLoja tipoAtendimento;
-    private String imagemUrl;
+    private List<LojaBairro> bairrosAtendidos = new ArrayList<>();
+    private BigDecimal valorMinimoFreteGratis;
 
-    public Loja() {
-    }
-
-    public Loja(Long id,
-                String nome,
-                String cep,
-                String cnpj,
-                String telefone,
-                String imagemUrl,
-                TipoAtendimentoLoja tipoAtendimento) {
-
+    public Loja(Long id, String nome, TipoAtendimentoLoja tipoAtendimento) {
         this.id = id;
         this.nome = nome;
-        this.cep = cep;
-        this.cnpj = cnpj;
-        this.telefone = telefone;
         this.tipoAtendimento = tipoAtendimento;
-        this.imagemUrl = imagemUrl;
     }
 
-    public Loja(String nome,
-                String cep,
-                String cnpj,
-                String telefone,
-                String imagemUrl,
-                TipoAtendimentoLoja tipoAtendimento)
-        {
-        this(null, nome, cep, cnpj, telefone,imagemUrl, tipoAtendimento);
+    public Long getId() { return id; }
+    public String getNome() { return nome; }
+    public TipoAtendimentoLoja getTipoAtendimento() { return tipoAtendimento; }
+    public List<LojaBairro> getBairrosAtendidos() { return bairrosAtendidos; }
+
+    public boolean aceitaEntrega() {
+        return tipoAtendimento == TipoAtendimentoLoja.ENTREGA
+                || tipoAtendimento == TipoAtendimentoLoja.AMBOS;
     }
 
-    // Getters e Setters
-
-    public Long getId() {
-        return id;
+    public boolean aceitaRetirada() {
+        return tipoAtendimento == TipoAtendimentoLoja.RETIRADA
+                || tipoAtendimento == TipoAtendimentoLoja.AMBOS;
     }
 
-    public String getNome() {
-        return nome;
+    public void alterarTipoAtendimento(TipoAtendimentoLoja novoTipo) {
+
+        if (novoTipo == TipoAtendimentoLoja.RETIRADA && !bairrosAtendidos.isEmpty()) {
+            throw new IllegalStateException(
+                    "Não pode virar RETIRADA enquanto houver bairros cadastrados."
+            );
+        }
+
+        this.tipoAtendimento = novoTipo;
     }
 
-    public String getCep() {
-        return cep;
+    public void adicionarBairro(Bairro bairro, java.math.BigDecimal valorFrete) {
+
+        if (!aceitaEntrega()) {
+            throw new IllegalStateException("Loja não aceita entrega.");
+        }
+
+        LojaBairro lojaBairro = new LojaBairro(this, bairro, valorFrete);
+        bairrosAtendidos.add(lojaBairro);
     }
 
-    public String getCnpj() {
-        return cnpj;
+    public void removerBairro(Bairro bairro) {
+        bairrosAtendidos.removeIf(lb -> lb.getBairro().equals(bairro));
     }
 
-    public String getTelefone() {
-        return telefone;
+    private BigDecimal buscarFreteDoBairro(Bairro bairro) {
+
+        return bairrosAtendidos.stream()
+                .filter(lb -> lb.getBairro().equals(bairro))
+                .findFirst()
+                .map(LojaBairro::getValorFrete)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Bairro não atendido pela loja.")
+                );
     }
 
-    public TipoAtendimentoLoja getTipoAtendimento() {
-        return tipoAtendimento;
+    public BigDecimal getValorMinimoFreteGratis() {
+        return valorMinimoFreteGratis;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void configurarFreteGratis(BigDecimal valorMinimo) {
+        if (valorMinimo != null && valorMinimo.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Valor mínimo inválido.");
+        }
+        this.valorMinimoFreteGratis = valorMinimo;
     }
-
-    public String getImagemUrl() { return imagemUrl; }
-
-    public void setImagemUrl(String imagemUrl) {
-        this.imagemUrl = imagemUrl;
-    }}
+}

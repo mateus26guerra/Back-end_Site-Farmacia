@@ -17,4 +17,6 @@ public interface LojaPorta {
 
     Loja update(Long id,
                 Loja dadosAtualizados);
+
+    void deletar(Long id);
 }

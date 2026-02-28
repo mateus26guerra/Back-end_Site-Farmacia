@@ -2,9 +2,6 @@ package projeto_base_de_telas_e_login.adapter.out.persistence.categoria;
 
 import jakarta.persistence.*;
 import projeto_base_de_telas_e_login.domain.model.categoria.Categoria;
-import projeto_base_de_telas_e_login.adapter.out.persistence.Product.ProductEntity;
-
-import java.util.List;
 
 @Entity
 @Table(name = "categoria")
@@ -14,22 +11,40 @@ public class CategoriaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome_categoria", nullable = false)
+    @Column(name = "nome_categoria", nullable = false, unique = true)
     private String nomeCategoria;
 
+    protected CategoriaEntity() {}
 
-    public CategoriaEntity() {
-    }
-
+    // DOMAIN → ENTITY
     public CategoriaEntity(Categoria categoria) {
         this.id = categoria.getId();
-        this.nomeCategoria = categoria.getNome_categoria();
+        this.nomeCategoria = categoria.getNomeCategoria();
     }
 
+    // ENTITY → DOMAIN
     public Categoria toDomain() {
         Categoria categoria = new Categoria();
         categoria.setId(this.id);
-        categoria.setNome_categoria(this.nomeCategoria);
+        categoria.setNomeCategoria(this.nomeCategoria);
         return categoria;
+    }
+
+    // GETTERS
+    public Long getId() {
+        return id;
+    }
+
+    public String getNomeCategoria() {
+        return nomeCategoria;
+    }
+
+    // SETTERS
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNomeCategoria(String nomeCategoria) {
+        this.nomeCategoria = nomeCategoria;
     }
 }

@@ -11,18 +11,15 @@ public record ItemPedidoDTO(
         String preco,
         Integer quantidade
 ) {
-
     public static ItemPedidoDTO fromDomain(ItemPedido item) {
 
-        var produto = item.getProduto();
-
         return new ItemPedidoDTO(
-                produto.getId(),
-                produto.getName(),
-                produto.getVariacao(),
-                produto.getImagemUrl(),
-                produto.getCategoria().getNome_categoria(),
-                produto.getPreco().getValorFinal().toString(),
+                null,
+                item.getNomeProduto(),
+                null,
+                null,
+                null,
+                item.getPrecoUnitario().toString(),
                 item.getQuantidade()
         );
     }

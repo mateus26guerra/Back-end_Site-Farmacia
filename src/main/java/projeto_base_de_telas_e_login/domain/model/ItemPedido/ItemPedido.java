@@ -1,59 +1,29 @@
 package projeto_base_de_telas_e_login.domain.model.ItemPedido;
 
-import projeto_base_de_telas_e_login.domain.model.product.Product;
-
-import java.math.BigDecimal;
+import projeto_base_de_telas_e_login.domain.model.Preco.Preco;
 
 public class ItemPedido {
 
-
-    private Long id;
-    private Product produto;
+    private String nomeProduto;
+    private Preco precoUnitario;
     private Integer quantidade;
+    private Preco subtotal;
 
-    public ItemPedido() {}
+    public ItemPedido(String nomeProduto,
+                      Preco precoUnitario,
+                      Integer quantidade) {
 
-    public ItemPedido(Long id, Product produto, Integer quantidade) {
-        if (produto == null) {
-            throw new IllegalArgumentException("Produto é obrigatório");
-        }
-        if (quantidade == null || quantidade <= 0) {
-            throw new IllegalArgumentException("Quantidade inválida");
-        }
-        this.id = id;
-        this.produto = produto;
+        this.nomeProduto = nomeProduto;
+        this.precoUnitario = precoUnitario;
         this.quantidade = quantidade;
-    }
-    public BigDecimal getSubtotal() {
-        return produto.getPreco()
-                .multiplicar(quantidade)
-                .getValorFinal();
+        this.subtotal = precoUnitario.multiplicar(quantidade);
     }
 
-    public Long getId() {
-        return id;
-    }
+    public String getNomeProduto() { return nomeProduto; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Preco getPrecoUnitario() { return precoUnitario; }
 
-    public Product getProduto() {
-        return produto;
-    }
+    public Integer getQuantidade() { return quantidade; }
 
-    public void setProduto(Product produto) {
-        this.produto = produto;
-    }
-
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(Integer quantidade) {
-        if (quantidade == null || quantidade <= 0) {
-            throw new IllegalArgumentException("Quantidade inválida");
-        }
-        this.quantidade = quantidade;
-    }
+    public Preco getSubtotal() { return subtotal; }
 }

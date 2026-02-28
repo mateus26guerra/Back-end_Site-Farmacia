@@ -1,6 +1,5 @@
 package projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido;
 
-import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.Bairro;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.FormaDePagamento;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.StatusDoPedido;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Enum.TipoEntrega;
@@ -11,28 +10,24 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record ListaDePedidoDTO(
+
         Long id,
-        LocalDateTime criado,
-        String cliente,
+        LocalDateTime criadoEm,
+        String nomeCliente,
         String telefone,
         String endereco,
-        Bairro bairro,
-        String complemento,
-        String cep,
+        String bairro,
         FormaDePagamento formaDePagamento,
-        StatusDoPedido statusDoPedido,
+        StatusDoPedido status,
         TipoEntrega tipoEntrega,
-        String observacao,
         List<ItemPedidoDTO> itens,
         BigDecimal totalProdutos,
         BigDecimal valorFrete,
-        BigDecimal totalComFrete,
+        BigDecimal totalFinal,
         boolean freteGratis
+
 ) {
-
     public static ListaDePedidoDTO fromDomain(Pedido pedido) {
-
-        pedido.calcularTotais(); // garante que os totais estejam atualizados
 
         List<ItemPedidoDTO> itensDto = pedido.getItens()
                 .stream()
@@ -41,22 +36,19 @@ public record ListaDePedidoDTO(
 
         return new ListaDePedidoDTO(
                 pedido.getId(),
-                pedido.getCriado(),
-                pedido.getCliente(),
+                pedido.getCriadoEm(),
+                pedido.getNomeCliente(),
                 pedido.getTelefone(),
                 pedido.getEndereco(),
                 pedido.getBairro(),
-                pedido.getComplemento(),
-                pedido.getCep(),
-                pedido.getFormaDePagamento(),
-                pedido.getStatusDoPedido(),
+                null, // se quiser depois adicionamos formaPagamento no model
+                pedido.getStatus(),
                 pedido.getTipoEntrega(),
-                pedido.getObservacao(),
                 itensDto,
-                pedido.getTotalProdutos(),
-                pedido.getValorFrete(),
-                pedido.getTotalComFrete(),
-                pedido.isFreteGratis()
+                pedido.getTotalProdutos().getValor(),   // ⚠️ Lembre de converter Preco → BigDecimal
+                pedido.getValorFrete().getValor(),      // ⚠️ mesmo aqui
+                pedido.getTotalFinal().getValor(),      // ⚠️ mesmo aqui
+                pedido.getFreteGratis()                 // ✅ substitui isFreteGratis()
         );
     }
 }

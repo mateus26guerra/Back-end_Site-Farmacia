@@ -24,12 +24,12 @@ public class ProdutoUseCase {
     public void save(Product product) {
 
         if (product.getCategoria() == null ||
-                product.getCategoria().getNome_categoria() == null) {
+                product.getCategoria().getNomeCategoria() == null) { // <--- corrigido
             throw new IllegalArgumentException("Categoria é obrigatória");
         }
 
         Categoria categoria = categoriaPorta
-                .findByNome(product.getCategoria().getNome_categoria())
+                .findByNome(product.getCategoria().getNomeCategoria()) // <--- corrigido
                 .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
         product.setCategoria(categoria);
