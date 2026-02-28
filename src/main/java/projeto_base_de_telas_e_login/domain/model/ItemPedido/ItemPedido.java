@@ -4,6 +4,8 @@ import projeto_base_de_telas_e_login.domain.model.Preco.Preco;
 
 public class ItemPedido {
 
+    private Long id;
+
     private String nomeProduto;
     private Preco precoUnitario;
     private Integer quantidade;
@@ -13,17 +15,19 @@ public class ItemPedido {
                       Preco precoUnitario,
                       Integer quantidade) {
 
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("Quantidade inválida");
+        }
+
         this.nomeProduto = nomeProduto;
         this.precoUnitario = precoUnitario;
         this.quantidade = quantidade;
         this.subtotal = precoUnitario.multiplicar(quantidade);
     }
 
+    public Long getId() { return id; }
     public String getNomeProduto() { return nomeProduto; }
-
     public Preco getPrecoUnitario() { return precoUnitario; }
-
     public Integer getQuantidade() { return quantidade; }
-
     public Preco getSubtotal() { return subtotal; }
 }

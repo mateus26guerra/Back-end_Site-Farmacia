@@ -30,21 +30,9 @@ public class CategoriaEntity {
         return categoria;
     }
 
-    // GETTERS
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public String getNomeCategoria() { return nomeCategoria; }
 
-    public String getNomeCategoria() {
-        return nomeCategoria;
-    }
-
-    // SETTERS
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setNomeCategoria(String nomeCategoria) {
-        this.nomeCategoria = nomeCategoria;
-    }
+    public void setId(Long id) { this.id = id; }
+    public void setNomeCategoria(String nomeCategoria) { this.nomeCategoria = nomeCategoria; }
 }

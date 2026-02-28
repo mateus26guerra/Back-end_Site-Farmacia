@@ -12,7 +12,6 @@ public class Categoria {
         this.nomeCategoria = nomeCategoria;
     }
 
-    // GETTERS
     public Long getId() {
         return id;
     }
@@ -21,7 +20,6 @@ public class Categoria {
         return nomeCategoria;
     }
 
-    // SETTERS
     public void setId(Long id) {
         this.id = id;
     }

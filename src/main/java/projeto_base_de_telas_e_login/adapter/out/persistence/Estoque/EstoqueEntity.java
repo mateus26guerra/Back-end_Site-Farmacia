@@ -10,7 +10,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table(
         name = "estoque",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"loja_id", "produto_id"})}
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"loja_id", "produto_id"})
+        }
 )
 public class EstoqueEntity {
 
@@ -36,7 +38,12 @@ public class EstoqueEntity {
 
     protected EstoqueEntity() {}
 
-    public EstoqueEntity(LojaEntity loja, ProductEntity produto, Integer quantidade, BigDecimal precoVenda) {
+    public EstoqueEntity(
+            LojaEntity loja,
+            ProductEntity produto,
+            Integer quantidade,
+            BigDecimal precoVenda
+    ) {
         this.loja = loja;
         this.produto = produto;
         this.quantidade = quantidade;
