@@ -1,12 +1,10 @@
 package projeto_base_de_telas_e_login.adapter.in.web.controllers.TelaLoja;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import projeto_base_de_telas_e_login.adapter.in.web.dto.loja.CreateLojaRequest;
-import projeto_base_de_telas_e_login.adapter.in.web.dto.loja.LojaResponse;
-import projeto_base_de_telas_e_login.domain.UseCase.Loja.CreateLojaUseCase;
-import projeto_base_de_telas_e_login.domain.UseCase.Loja.DeleteLojaUseCase;
-import projeto_base_de_telas_e_login.domain.UseCase.Loja.ListLojaUseCase;
-import projeto_base_de_telas_e_login.domain.UseCase.Loja.UpdateLojaUseCase;
+import projeto_base_de_telas_e_login.adapter.in.web.dto.loja.Loja.CreateLojaRequest;
+import projeto_base_de_telas_e_login.adapter.in.web.dto.loja.Loja.LojaResponse;
+import projeto_base_de_telas_e_login.domain.UseCase.Loja.Loja.LojaUseCase;
 
 import java.util.List;
 
@@ -14,39 +12,31 @@ import java.util.List;
 @RequestMapping("/lojas")
 public class LojaController {
 
-    private final CreateLojaUseCase createUseCase;
-    private final ListLojaUseCase listUseCase;
-    private final UpdateLojaUseCase updateUseCase;
-    private final DeleteLojaUseCase deleteUseCase;
+    private final LojaUseCase useCase;
 
-    public LojaController(CreateLojaUseCase createUseCase,
-                          ListLojaUseCase listUseCase,
-                          UpdateLojaUseCase updateUseCase,
-                          DeleteLojaUseCase deleteUseCase) {
-        this.createUseCase = createUseCase;
-        this.listUseCase = listUseCase;
-        this.updateUseCase = updateUseCase;
-        this.deleteUseCase = deleteUseCase;
+    public LojaController(LojaUseCase useCase) {
+        this.useCase = useCase;
     }
 
     @PostMapping
-    public LojaResponse criar(@RequestBody CreateLojaRequest request) {
-        return createUseCase.executar(request);
+    public ResponseEntity<LojaResponse> criar(@RequestBody CreateLojaRequest request) {
+        return ResponseEntity.ok(useCase.criar(request));
     }
 
     @GetMapping
-    public List<LojaResponse> listar() {
-        return listUseCase.executar();
+    public ResponseEntity<List<LojaResponse>> listar() {
+        return ResponseEntity.ok(useCase.listar());
     }
 
     @PutMapping("/{id}")
-    public LojaResponse atualizar(@PathVariable Long id,
-                                  @RequestBody CreateLojaRequest request) {
-        return updateUseCase.executar(id, request);
+    public ResponseEntity<LojaResponse> atualizar(@PathVariable Long id,
+                                                  @RequestBody CreateLojaRequest request) {
+        return ResponseEntity.ok(useCase.atualizar(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Long id) {
-        deleteUseCase.executar(id);
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        useCase.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }

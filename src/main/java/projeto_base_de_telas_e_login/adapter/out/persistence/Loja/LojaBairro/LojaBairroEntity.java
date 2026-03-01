@@ -3,6 +3,8 @@ package projeto_base_de_telas_e_login.adapter.out.persistence.Loja.LojaBairro;
 import jakarta.persistence.*;
 import projeto_base_de_telas_e_login.adapter.out.persistence.Loja.Bairro.BairroEntity;
 import projeto_base_de_telas_e_login.adapter.out.persistence.Loja.loja.LojaEntity;
+import projeto_base_de_telas_e_login.domain.model.Loja.Bairro;
+import projeto_base_de_telas_e_login.domain.model.Loja.Loja;
 import projeto_base_de_telas_e_login.domain.model.Loja.LojaBairro;
 
 import java.math.BigDecimal;
@@ -34,11 +36,14 @@ public class LojaBairroEntity {
     }
 
     public LojaBairro toDomain() {
-        return new LojaBairro(
-                loja.toDomain(),
-                bairro.toDomain(),
-                valorFrete
-        );
+        Loja lojaDomain = new Loja(loja.getId(), loja.getNome(), loja.getTipoAtendimento());
+        Bairro bairroDomain = new Bairro(bairro.getId(), bairro.getNome());
+
+        if (loja.aceitaEntrega()) {
+            lojaDomain.adicionarBairro(bairroDomain, this.valorFrete);
+        }
+
+        return new LojaBairro(lojaDomain, bairroDomain, this.valorFrete);
     }
 
     public BigDecimal getValorFrete() {

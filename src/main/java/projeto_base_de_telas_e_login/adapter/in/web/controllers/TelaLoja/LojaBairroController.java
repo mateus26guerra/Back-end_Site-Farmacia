@@ -1,9 +1,9 @@
 package projeto_base_de_telas_e_login.adapter.in.web.controllers.TelaLoja;
 
 import org.springframework.web.bind.annotation.*;
-import projeto_base_de_telas_e_login.adapter.out.persistence.Loja.LojaBairro.LojaBairroPersistenceAdapter;
-import projeto_base_de_telas_e_login.domain.model.Loja.LojaBairro;
-import projeto_base_de_telas_e_login.domain.repository.LojaBairroRepositoryPort;
+import projeto_base_de_telas_e_login.adapter.in.web.dto.loja.lojabairros.CreateLojaBairroRequest;
+import projeto_base_de_telas_e_login.adapter.in.web.dto.loja.lojabairros.LojaBairroResponse;
+import projeto_base_de_telas_e_login.domain.UseCase.Loja.LojaBairro.LojaBairroUseCase;
 
 import java.util.List;
 
@@ -11,24 +11,30 @@ import java.util.List;
 @RequestMapping("/loja-bairros")
 public class LojaBairroController {
 
-    private final LojaBairroRepositoryPort port;
+    private final LojaBairroUseCase useCase;
 
-    public LojaBairroController(LojaBairroRepositoryPort port) {
-        this.port = port;
+    public LojaBairroController(LojaBairroUseCase useCase) {
+        this.useCase = useCase;
     }
 
     @PostMapping
-    public LojaBairro criar(@RequestBody LojaBairro lojaBairro) {
-        return port.salvar(lojaBairro);
+    public LojaBairroResponse criar(@RequestBody CreateLojaBairroRequest request) {
+        return useCase.criar(request);
     }
 
-    @GetMapping("/{lojaId}")
-    public List<LojaBairro> listarPorLoja(@PathVariable Long lojaId) {
-        return port.buscarPorLoja(lojaId);
+    @GetMapping("/loja/{lojaId}")
+    public List<LojaBairroResponse> listarPorLoja(@PathVariable Long lojaId) {
+        return useCase.listarPorLoja(lojaId);
     }
+
+    @GetMapping
+    public List<LojaBairroResponse> listaTodasLojas() {
+        return useCase.lsitaTodasLoja();
+    }
+
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
-        ((LojaBairroPersistenceAdapter) port).deletar(id);
+        useCase.deletar(id);
     }
 }

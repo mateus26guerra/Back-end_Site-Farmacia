@@ -51,6 +51,15 @@ public class LojaBairroPersistenceAdapter implements LojaBairroRepositoryPort {
                 .toList();
     }
 
+    @Override
+    public List<LojaBairro> listaTodasLojas() {
+        return repository.findAll()
+                .stream()
+                .map(LojaBairroEntity::toDomain)
+                .toList();
+    }
+
+
     public void deletar(Long id) {
         repository.deleteById(id);
     }

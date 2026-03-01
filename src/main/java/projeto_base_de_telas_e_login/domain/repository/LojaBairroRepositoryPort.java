@@ -9,4 +9,9 @@ public interface LojaBairroRepositoryPort {
     LojaBairro salvar(LojaBairro lojaBairro);
 
     List<LojaBairro> buscarPorLoja(Long lojaId);
+
+    void deletar(Long id);
+
+    List<LojaBairro>  listaTodasLojas();
+
 }

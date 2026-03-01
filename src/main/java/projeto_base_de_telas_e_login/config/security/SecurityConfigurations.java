@@ -69,6 +69,37 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST,"/products/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/products/**").hasRole("ADMIN")
 
+                        // =====================
+                        //  tela de BairroController
+                        // =====================
+
+                        .requestMatchers(HttpMethod.POST,"/bairros/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/bairros/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/bairros/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/bairros/**").hasRole("ADMIN")
+
+
+                        // =====================
+                        //  tela de BairroController
+                        // =====================
+
+                        .requestMatchers(HttpMethod.POST,"/loja-bairros/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/loja-bairros/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/loja-bairros/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/loja-bairros/**").hasRole("ADMIN")
+
+
+
+                        // =====================
+                        //  tela de lojas
+                        // =====================
+
+                        .requestMatchers(HttpMethod.POST,"/lojas/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/lojas/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/lojas/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/lojas/**").hasRole("ADMIN")
+
+
 
                         // =====================
                         //  tela de TelaPedido

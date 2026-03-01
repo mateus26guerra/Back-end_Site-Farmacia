@@ -60,4 +60,9 @@ public class LojaEntity {
     public TipoAtendimentoLoja getTipoAtendimento() { return tipoAtendimento; }
     public BigDecimal getValorMinimoFreteGratis() { return valorMinimoFreteGratis; }
     public List<LojaBairroEntity> getBairros() { return bairros; }
+
+    public boolean aceitaEntrega() {
+        return this.tipoAtendimento == TipoAtendimentoLoja.ENTREGA
+                || this.tipoAtendimento == TipoAtendimentoLoja.AMBOS;
+    }
 }

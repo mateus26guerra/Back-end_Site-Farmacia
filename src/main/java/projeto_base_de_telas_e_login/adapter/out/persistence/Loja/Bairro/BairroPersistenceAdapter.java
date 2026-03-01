@@ -31,9 +31,11 @@ public class BairroPersistenceAdapter implements BairroRepositoryPort {
 
     @Override
     public Optional<Bairro> buscarPorId(Long id) {
-        return repository.findById(id).map(BairroEntity::toDomain);
+        return repository.findById(id)
+                .map(BairroEntity::toDomain);
     }
 
+    @Override
     public void deletar(Long id) {
         repository.deleteById(id);
     }
