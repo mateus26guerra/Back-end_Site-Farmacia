@@ -11,6 +11,7 @@ import projeto_base_de_telas_e_login.domain.repository.LojaBairroRepositoryPort;
 import projeto_base_de_telas_e_login.domain.repository.LojaRepositoryPort;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,15 +31,25 @@ public class LojaBairroUseCase {
         this.bairroRepository = bairroRepository;
     }
 
-    // Criar
+    // Criar LojaBairro
     public LojaBairroResponse criar(CreateLojaBairroRequest request) {
-        Loja loja = lojaRepository.buscarPorId(request.getLojaId())
+        Loja loja = Optional.ofNullable(request.getLojaId())
+                .map(lojaRepository::buscarPorId)
+                .orElseGet(() -> request.getLojaNome() != null
+                        ? lojaRepository.buscarPorNome(request.getLojaNome())
+                        : Optional.empty())
                 .orElseThrow(() -> new IllegalArgumentException("Loja não encontrada"));
-        Bairro bairro = bairroRepository.buscarPorId(request.getBairroId())
+
+        Bairro bairro = Optional.ofNullable(request.getBairroId())
+                .map(bairroRepository::buscarPorId)
+                .orElseGet(() -> request.getBairroNome() != null
+                        ? bairroRepository.buscarPorNome(request.getBairroNome())
+                        : Optional.empty())
                 .orElseThrow(() -> new IllegalArgumentException("Bairro não encontrado"));
 
         LojaBairro lb = new LojaBairro(loja, bairro, request.getValorFrete());
         LojaBairro salvo = lojaBairroRepository.salvar(lb);
+
         return LojaBairroResponse.fromDomain(salvo);
     }
 
@@ -50,11 +61,12 @@ public class LojaBairroUseCase {
                 .collect(Collectors.toList());
     }
 
-    public List<LojaBairroResponse> lsitaTodasLoja() {
+    // Listar todas as lojas e bairros
+    public List<LojaBairroResponse> listaTodasLojas() {
         return lojaBairroRepository.listaTodasLojas()
                 .stream()
-                .map(lb -> LojaBairroResponse.fromDomain(lb))
-                .toList();
+                .map(LojaBairroResponse::fromDomain)
+                .collect(Collectors.toList());
     }
 
     // Deletar

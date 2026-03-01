@@ -14,4 +14,7 @@ public interface BairroRepositoryPort {
     Optional<Bairro> buscarPorId(Long id);
 
     void deletar(Long id);
+
+    Optional<Bairro> buscarPorNome(String nome); // <-- aqui
+
 }

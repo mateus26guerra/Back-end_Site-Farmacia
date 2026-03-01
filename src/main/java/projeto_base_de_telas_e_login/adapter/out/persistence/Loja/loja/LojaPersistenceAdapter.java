@@ -37,4 +37,11 @@ public class LojaPersistenceAdapter implements LojaRepositoryPort {
     public void deletar(Long id) {
         repository.deleteById(id);
     }
+
+
+    @Override
+    public Optional<Loja> buscarPorNome(String nome) {
+        return repository.findByNome(nome) // supondo que o JpaRepository tem esse método
+                .map(LojaEntity::toDomain);
+    }
 }

@@ -29,9 +29,8 @@ public class LojaBairroController {
 
     @GetMapping
     public List<LojaBairroResponse> listaTodasLojas() {
-        return useCase.lsitaTodasLoja();
+        return useCase.listaTodasLojas();
     }
-
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {

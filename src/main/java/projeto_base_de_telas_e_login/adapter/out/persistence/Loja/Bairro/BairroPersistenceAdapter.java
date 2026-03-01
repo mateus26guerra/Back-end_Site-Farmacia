@@ -28,6 +28,10 @@ public class BairroPersistenceAdapter implements BairroRepositoryPort {
                 .map(BairroEntity::toDomain)
                 .toList();
     }
+    @Override
+    public Optional<Bairro> buscarPorNome(String nome) {
+        return repository.findByNome(nome).map(BairroEntity::toDomain);
+    }
 
     @Override
     public Optional<Bairro> buscarPorId(Long id) {

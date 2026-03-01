@@ -39,11 +39,10 @@ public class LojaEntity {
 
     // ENTITY -> DOMAIN
     public Loja toDomain() {
-
         Loja loja = new Loja(id, nome, tipoAtendimento);
         loja.configurarFreteGratis(valorMinimoFreteGratis);
 
-        if (bairros != null) {
+        if (bairros != null && loja.aceitaEntrega()) { // <-- importante
             bairros.forEach(b ->
                     loja.adicionarBairro(
                             b.getBairro().toDomain(),

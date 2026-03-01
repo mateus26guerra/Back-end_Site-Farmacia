@@ -14,4 +14,6 @@ public interface LojaRepositoryPort {
     List<Loja> listar();
 
     void deletar(Long id);
+
+    Optional<Loja> buscarPorNome(String nome);
 }
