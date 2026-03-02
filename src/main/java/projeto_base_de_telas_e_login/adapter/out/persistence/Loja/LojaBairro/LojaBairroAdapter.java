@@ -6,17 +6,19 @@ import projeto_base_de_telas_e_login.adapter.out.persistence.Loja.Bairro.BairroR
 import projeto_base_de_telas_e_login.adapter.out.persistence.Loja.loja.LojaEntity;
 import projeto_base_de_telas_e_login.adapter.out.persistence.Loja.loja.LojaRepository;
 import projeto_base_de_telas_e_login.domain.model.Loja.LojaBairro;
-import projeto_base_de_telas_e_login.domain.repository.LojaBairroRepositoryPort;
+import projeto_base_de_telas_e_login.domain.repository.LojaBairroPort;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
-public class LojaBairroPersistenceAdapter implements LojaBairroRepositoryPort {
+public class LojaBairroAdapter implements LojaBairroPort {
 
     private final LojaBairroRepository repository;
     private final LojaRepository lojaRepository;
     private final BairroRepository bairroRepository;
 
-    public LojaBairroPersistenceAdapter(
+    public LojaBairroAdapter(
             LojaBairroRepository repository,
             LojaRepository lojaRepository,
             BairroRepository bairroRepository
@@ -31,11 +33,11 @@ public class LojaBairroPersistenceAdapter implements LojaBairroRepositoryPort {
 
         LojaEntity lojaEntity = lojaRepository
                 .findById(lojaBairro.getLoja().getId())
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Loja não encontrada"));
 
         BairroEntity bairroEntity = bairroRepository
                 .findById(lojaBairro.getBairro().getId())
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Bairro não encontrado"));
 
         LojaBairroEntity entity =
                 new LojaBairroEntity(lojaBairro, lojaEntity, bairroEntity);
@@ -45,21 +47,21 @@ public class LojaBairroPersistenceAdapter implements LojaBairroRepositoryPort {
 
     @Override
     public List<LojaBairro> buscarPorLoja(Long lojaId) {
-        return repository.findByLojaId(lojaId)
+        return repository.findByLoja_Id(lojaId)
                 .stream()
                 .map(LojaBairroEntity::toDomain)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<LojaBairro> listaTodasLojas() {
+    public List<LojaBairro> listarTodos() {
         return repository.findAll()
                 .stream()
                 .map(LojaBairroEntity::toDomain)
-                .toList();
+                .collect(Collectors.toList());
     }
 
-
+    @Override
     public void deletar(Long id) {
         repository.deleteById(id);
     }

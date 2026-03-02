@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
-    List<ProductEntity> findByCategoria_Id(Long categoriaId);
+
     List<ProductEntity> findByCategoria_NomeCategoria(String nomeCategoria);
 
+    Optional<ProductEntity> findByNameContainingIgnoreCase(String name);
 }

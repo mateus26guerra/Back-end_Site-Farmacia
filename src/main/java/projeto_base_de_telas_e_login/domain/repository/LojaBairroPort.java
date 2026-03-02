@@ -4,14 +4,13 @@ import projeto_base_de_telas_e_login.domain.model.Loja.LojaBairro;
 
 import java.util.List;
 
-public interface LojaBairroRepositoryPort {
+public interface LojaBairroPort {
 
     LojaBairro salvar(LojaBairro lojaBairro);
 
     List<LojaBairro> buscarPorLoja(Long lojaId);
 
+    List<LojaBairro> listarTodos();
+
     void deletar(Long id);
-
-    List<LojaBairro>  listaTodasLojas();
-
 }

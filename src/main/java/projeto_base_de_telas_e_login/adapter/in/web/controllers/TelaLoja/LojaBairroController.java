@@ -29,7 +29,7 @@ public class LojaBairroController {
 
     @GetMapping
     public List<LojaBairroResponse> listaTodasLojas() {
-        return useCase.listaTodasLojas();
+        return useCase.listarTodos();
     }
 
     @DeleteMapping("/{id}")

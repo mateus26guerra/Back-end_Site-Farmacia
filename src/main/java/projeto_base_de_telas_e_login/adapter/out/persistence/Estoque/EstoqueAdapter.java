@@ -1,48 +1,106 @@
-//package projeto_base_de_telas_e_login.adapter.out.persistence.Estoque;
-//
-//import org.springframework.stereotype.Component;
-//import projeto_base_de_telas_e_login.domain.model.estoque.Estoque;
-//import projeto_base_de_telas_e_login.domain.repository.EstoquePorta;
-//
-//import java.util.List;
-//import java.util.Optional;
-//@Component
-//public class EstoqueAdapter implements EstoquePorta {
-//
-//    private final EstoqueRepository repository;
-//
-//    public EstoqueAdapter(EstoqueRepository repository) {
-//        this.repository = repository;
-//    }
-//
-//    @Override
-//    public void save(Estoque estoque) {
-//        // depois você pode melhorar isso
-//        EstoqueEntity entity = new EstoqueEntity();
-//        repository.save(entity);
-//    }
-//
-//    @Override
-//    public Optional<Estoque> buscarPorLojaEProduto(Long lojaId, Long produtoId) {
-//        return repository.findByLoja_IdAndProduto_Id(lojaId, produtoId)
-//                .map(this::toDomain);
-//    }
-//
-//    @Override
-//    public List<Estoque> buscarPorLoja(Long lojaId) {
-//        return repository.findByLoja_Id(lojaId)
-//                .stream()
-//                .map(this::toDomain)
-//                .toList();
-//    }
-//
-//    private Estoque toDomain(EstoqueEntity entity) {
-//        return new Estoque(
-//                entity.getId(),
-//                entity.getLoja().toDomain(),
-//                entity.getProduto().toDomain(),
-//                entity.getQuantidade(),
-//                new projeto_base_de_telas_e_login.domain.model.Preco.Preco(entity.getPrecoVenda())
-//        );
-//    }
-//}
+package projeto_base_de_telas_e_login.adapter.out.persistence.Estoque;
+
+import org.springframework.stereotype.Component;
+import projeto_base_de_telas_e_login.adapter.out.persistence.Loja.loja.LojaEntity;
+import projeto_base_de_telas_e_login.adapter.out.persistence.Loja.loja.LojaRepository;
+import projeto_base_de_telas_e_login.adapter.out.persistence.Product.ProductEntity;
+import projeto_base_de_telas_e_login.adapter.out.persistence.Product.ProductRepository;
+import projeto_base_de_telas_e_login.domain.model.Preco.Preco;
+import projeto_base_de_telas_e_login.domain.model.estoque.Estoque;
+import projeto_base_de_telas_e_login.domain.repository.EstoquePorta;
+
+import java.util.List;
+import java.util.Optional;
+
+@Component
+public class EstoqueAdapter implements EstoquePorta {
+
+    private final EstoqueRepository repository;
+    private final LojaRepository lojaRepository;
+    private final ProductRepository productRepository;
+
+    public EstoqueAdapter(
+            EstoqueRepository repository,
+            LojaRepository lojaRepository,
+            ProductRepository productRepository
+    ) {
+        this.repository = repository;
+        this.lojaRepository = lojaRepository;
+        this.productRepository = productRepository;
+    }
+
+    @Override
+    public void save(Estoque estoque) {
+
+        LojaEntity loja = lojaRepository.getReferenceById(
+                estoque.getLoja().getId()
+        );
+
+        ProductEntity produto = productRepository.getReferenceById(
+                estoque.getProduto().getId()
+        );
+
+        EstoqueEntity entity = new EstoqueEntity(
+                loja,
+                produto,
+                estoque.getQuantidade(),
+                estoque.getPrecoVenda().getValor()
+        );
+
+        repository.save(entity);
+    }
+
+    @Override
+    public Optional<Estoque> buscarPorLojaEProduto(Long lojaId, Long produtoId) {
+        return repository.findByLoja_IdAndProduto_Id(lojaId, produtoId)
+                .map(this::toDomain);
+    }
+
+    @Override
+    public List<Estoque> buscarPorLoja(Long lojaId) {
+        return repository.findByLoja_Id(lojaId)
+                .stream()
+                .map(this::toDomain)
+                .toList();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
+    private Estoque toDomain(EstoqueEntity entity) {
+        return new Estoque(
+                entity.getId(),
+                entity.getLoja().toDomain(),
+                entity.getProduto().toDomain(),
+                entity.getQuantidade(),
+                new Preco(entity.getPrecoVenda()),
+                null // percentualDesconto (ajusta depois se quiser salvar no banco)
+        );
+    }
+
+    @Override
+    public List<Estoque> listarTodos() {
+        return repository.findAll()
+                .stream()
+                .map(this::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Estoque> buscarPorNomeLoja(String nomeLoja) {
+        return repository.findByLoja_NomeContainingIgnoreCase(nomeLoja)
+                .stream()
+                .map(this::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Estoque> buscarPorNomeProduto(String nomeProduto) {
+        return repository.findByProduto_NameContainingIgnoreCase(nomeProduto)
+                .stream()
+                .map(this::toDomain)
+                .toList();
+    }
+}

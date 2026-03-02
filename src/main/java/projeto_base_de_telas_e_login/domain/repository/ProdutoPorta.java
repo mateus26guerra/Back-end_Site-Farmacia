@@ -5,8 +5,6 @@ import projeto_base_de_telas_e_login.domain.model.product.Product;
 import java.util.List;
 import java.util.Optional;
 
-import java.util.List;
-
 public interface ProdutoPorta {
 
     void save(Product product);
@@ -17,6 +15,10 @@ public interface ProdutoPorta {
 
     void deleteById(Long id);
 
-    List<Product> findAllByIds(List<Long> ids); // 🔥 ADICIONAR
+    Optional<Product> findById(Long id);
+
+    Optional<Product> buscarPorNome(String nome);
+
+    List<Product> findAllByIds(List<Long> ids);
 
 }

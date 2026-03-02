@@ -2,16 +2,16 @@ package projeto_base_de_telas_e_login.domain.UseCase.Loja.Bairro;
 
 import org.springframework.stereotype.Service;
 import projeto_base_de_telas_e_login.domain.model.Loja.Bairro;
-import projeto_base_de_telas_e_login.domain.repository.BairroRepositoryPort;
+import projeto_base_de_telas_e_login.domain.repository.BairroPorta;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AdicionarBairroUseCase {
-    private final BairroRepositoryPort bairroRepositoryPort;
+    private final BairroPorta bairroRepositoryPort;
 
-    public AdicionarBairroUseCase(BairroRepositoryPort bairroRepositoryPort) {
+    public AdicionarBairroUseCase(BairroPorta bairroRepositoryPort) {
         this.bairroRepositoryPort = bairroRepositoryPort;
     }
 

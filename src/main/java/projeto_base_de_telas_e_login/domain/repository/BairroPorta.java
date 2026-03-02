@@ -5,7 +5,7 @@ import projeto_base_de_telas_e_login.domain.model.Loja.Bairro;
 import java.util.List;
 import java.util.Optional;
 
-public interface BairroRepositoryPort {
+public interface BairroPorta {
 
     Bairro salvar(Bairro bairro);
 
@@ -16,5 +16,6 @@ public interface BairroRepositoryPort {
     void deletar(Long id);
 
     Optional<Bairro> buscarPorNome(String nome); // <-- aqui
+
 
 }

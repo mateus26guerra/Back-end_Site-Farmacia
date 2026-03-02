@@ -24,28 +24,27 @@ public class ProdutoUseCase {
     public void save(Product product) {
 
         if (product.getCategoria() == null ||
-                product.getCategoria().getNomeCategoria() == null) { // <--- corrigido
+                product.getCategoria().getNomeCategoria() == null) {
             throw new IllegalArgumentException("Categoria é obrigatória");
         }
 
-        Categoria categoria = categoriaPorta
-                .findByNome(product.getCategoria().getNomeCategoria()) // <--- corrigido
+        Categoria categoriaEncontrada = categoriaPorta
+                .findByNome(product.getCategoria().getNomeCategoria())
                 .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
-        product.setCategoria(categoria);
+        // 🔥 ISSO AQUI É O MAIS IMPORTANTE
+        product.setCategoria(categoriaEncontrada);
 
         produtoPorta.save(product);
     }
 
     public List<Product> findByCategoriaNome(String nomeCategoria) {
-
         if (nomeCategoria == null || nomeCategoria.isBlank()) {
             throw new IllegalArgumentException("Nome da categoria é obrigatório");
         }
 
         return produtoPorta.findByCategoriaNome(nomeCategoria);
     }
-
 
     public List<Product> findAll() {
         return produtoPorta.findAll();

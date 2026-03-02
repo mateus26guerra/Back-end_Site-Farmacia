@@ -53,4 +53,14 @@ public class LojaBairroEntity {
     public BairroEntity getBairro() {
         return bairro;
     }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public LojaEntity getLoja() {
+        return loja;
+    }
+
 }

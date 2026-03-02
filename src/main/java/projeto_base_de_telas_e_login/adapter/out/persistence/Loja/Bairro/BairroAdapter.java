@@ -2,17 +2,17 @@ package projeto_base_de_telas_e_login.adapter.out.persistence.Loja.Bairro;
 
 import org.springframework.stereotype.Component;
 import projeto_base_de_telas_e_login.domain.model.Loja.Bairro;
-import projeto_base_de_telas_e_login.domain.repository.BairroRepositoryPort;
+import projeto_base_de_telas_e_login.domain.repository.BairroPorta;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
-public class BairroPersistenceAdapter implements BairroRepositoryPort {
+public class BairroAdapter implements BairroPorta {
 
     private final BairroRepository repository;
 
-    public BairroPersistenceAdapter(BairroRepository repository) {
+    public BairroAdapter(BairroRepository repository) {
         this.repository = repository;
     }
 

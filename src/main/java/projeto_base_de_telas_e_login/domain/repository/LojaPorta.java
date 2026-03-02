@@ -7,16 +7,13 @@ import java.util.Optional;
 
 public interface LojaPorta {
 
-    void save(Loja loja);
+    Loja salvar(Loja loja);
 
-    Optional<Loja> findById(Long id);
+    Optional<Loja> buscarPorId(Long id);
 
-    List<Loja> findAll();
+    Optional<Loja> buscarPorNome(String nome);
 
-    void deleteById(Long id);
-
-    Loja update(Long id,
-                Loja dadosAtualizados);
+    List<Loja> listar();
 
     void deletar(Long id);
 }

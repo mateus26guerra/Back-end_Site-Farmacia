@@ -78,6 +78,16 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET,"/bairros/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/bairros/**").hasRole("ADMIN")
 
+                        // =====================
+                        //  tela de TelaEstoque
+                        // =====================
+
+                        .requestMatchers(HttpMethod.POST,"/estoque/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/estoque/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/estoque/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/estoque/**").hasRole("ADMIN")
+
+
 
                         // =====================
                         //  tela de BairroController

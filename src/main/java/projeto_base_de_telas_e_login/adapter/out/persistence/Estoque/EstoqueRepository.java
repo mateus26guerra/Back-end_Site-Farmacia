@@ -7,7 +7,11 @@ import java.util.Optional;
 
 public interface EstoqueRepository extends JpaRepository<EstoqueEntity, Long> {
 
+    Optional<EstoqueEntity> findByLoja_IdAndProduto_Id(Long lojaId, Long produtoId);
+
     List<EstoqueEntity> findByLoja_Id(Long lojaId);
 
-    Optional<EstoqueEntity> findByLoja_IdAndProduto_Id(Long lojaId, Long produtoId);
+    List<EstoqueEntity> findByLoja_NomeContainingIgnoreCase(String nome);
+
+    List<EstoqueEntity> findByProduto_NameContainingIgnoreCase(String name);
 }

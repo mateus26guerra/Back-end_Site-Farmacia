@@ -1,14 +1,11 @@
 package projeto_base_de_telas_e_login.adapter.out.persistence.Product;
 
 import org.springframework.stereotype.Component;
-import projeto_base_de_telas_e_login.adapter.out.persistence.categoria.CategoriaEntity;
-import projeto_base_de_telas_e_login.adapter.out.persistence.categoria.CategoriaRepository;
 import projeto_base_de_telas_e_login.domain.model.product.Product;
 import projeto_base_de_telas_e_login.domain.repository.ProdutoPorta;
 
 import java.util.List;
-
-
+import java.util.Optional;
 
 @Component
 public class ProductAdapter implements ProdutoPorta {
@@ -21,7 +18,6 @@ public class ProductAdapter implements ProdutoPorta {
 
     @Override
     public void save(Product product) {
-
         ProductEntity entity = new ProductEntity(product);
         repository.save(entity);
     }
@@ -47,18 +43,25 @@ public class ProductAdapter implements ProdutoPorta {
         repository.deleteById(id);
     }
 
+    // 🔥 AGORA IMPLEMENTAMOS O QUE FALTAVA
+
+    @Override
+    public Optional<Product> findById(Long id) {
+        return repository.findById(id)
+                .map(ProductEntity::toDomain);
+    }
+
+    @Override
+    public Optional<Product> buscarPorNome(String name) {
+        return repository.findByNameContainingIgnoreCase(name)
+                .map(ProductEntity::toDomain);
+    }
+
     @Override
     public List<Product> findAllByIds(List<Long> ids) {
-
-        if (ids == null || ids.isEmpty()) {
-            throw new IllegalArgumentException("Lista de IDs não pode ser vazia");
-        }
-
         return repository.findAllById(ids)
                 .stream()
                 .map(ProductEntity::toDomain)
                 .toList();
     }
 }
-
-

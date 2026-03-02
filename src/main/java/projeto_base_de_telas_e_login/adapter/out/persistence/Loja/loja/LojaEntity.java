@@ -64,4 +64,16 @@ public class LojaEntity {
         return this.tipoAtendimento == TipoAtendimentoLoja.ENTREGA
                 || this.tipoAtendimento == TipoAtendimentoLoja.AMBOS;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setTipoAtendimento(TipoAtendimentoLoja tipoAtendimento) {
+        this.tipoAtendimento = tipoAtendimento;
+    }
+
+    public void setValorMinimoFreteGratis(BigDecimal valorMinimoFreteGratis) {
+        this.valorMinimoFreteGratis = valorMinimoFreteGratis;
+    }
 }

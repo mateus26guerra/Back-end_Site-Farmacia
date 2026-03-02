@@ -13,4 +13,11 @@ public interface EstoquePorta {
 
     List<Estoque> buscarPorLoja(Long lojaId);
 
+    List<Estoque> listarTodos();
+
+    List<Estoque> buscarPorNomeLoja(String nomeLoja);
+
+    List<Estoque> buscarPorNomeProduto(String nomeProduto);
+
+    void deleteById(Long id);
 }
