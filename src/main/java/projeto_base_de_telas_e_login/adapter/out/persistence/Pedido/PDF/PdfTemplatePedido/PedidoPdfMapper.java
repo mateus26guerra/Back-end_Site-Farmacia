@@ -1,7 +1,5 @@
 package projeto_base_de_telas_e_login.adapter.out.persistence.Pedido.PDF.PdfTemplatePedido;
 
-import projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido.pdfDTO.ItemPedidoPdfDTO;
-import projeto_base_de_telas_e_login.adapter.in.web.dto.Pedido.pdfDTO.PedidoPdfDTO;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Pedido;
 
 import java.util.List;
@@ -12,28 +10,31 @@ public class PedidoPdfMapper {
 
         List<ItemPedidoPdfDTO> itens = pedido.getItens()
                 .stream()
-                .map(item ->
-                        new ItemPedidoPdfDTO(
-                                item.getNomeProduto(),
-                                null, // imagem
-                                item.getQuantidade(),
-                                item.getPrecoUnitario().toString(),
-                                item.getSubtotal().toString()
-                        )
-                )
+                .map(item -> new ItemPedidoPdfDTO(
+                        item.getNomeProduto(),
+                        item.getQuantidade(),
+                        item.getPrecoUnitario().getValor(),
+                        item.getSubtotal().getValor()
+                ))
                 .toList();
 
         return new PedidoPdfDTO(
-                pedido.getId(),                             // 1
-                pedido.getCriadoEm().toString(),             // 2
-                pedido.getNomeCliente(),                     // 3
-                pedido.getTelefone(),                        // 4
-                pedido.getEndereco(),                        // 5
-                pedido.getBairro(),                          // 6
-                "",                                          // 7 -> complemento (não existe no Pedido)
-                pedido.getStatus().toString(),               // 8
-                pedido.getTotalFinal().toString(),           // 9
-                itens                                        // 10
+                pedido.getId(),
+                pedido.getNomeCliente(),
+                pedido.getEmail(),
+                pedido.getTelefone(),
+                pedido.getEndereco(),
+                pedido.getBairro(),
+                pedido.getComplemento(),
+                pedido.getObservacao(),
+                pedido.getStatus().name(),
+                pedido.getTipoEntrega().name(),
+                pedido.getCriadoEm(),
+                pedido.getTotalProdutos().getValor(),
+                pedido.getValorFrete().getValor(),
+                pedido.getTotalFinal().getValor(),
+                pedido.getFreteGratis(),
+                itens
         );
     }
 }

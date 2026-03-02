@@ -4,6 +4,7 @@ import projeto_base_de_telas_e_login.domain.model.ItemPedido.ItemPedido;
 import projeto_base_de_telas_e_login.domain.model.Pedido.Pedido;
 
 import java.text.NumberFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class PdfPedidoTemplate {
@@ -13,10 +14,11 @@ public class PdfPedidoTemplate {
         NumberFormat moedaBR =
                 NumberFormat.getCurrencyInstance(Locale.forLanguageTag("pt-BR"));
 
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
         StringBuilder itensHtml = new StringBuilder();
 
         for (ItemPedido item : pedido.getItens()) {
-
             itensHtml.append("""
                 <tr>
                     <td class="produto">%s</td>
@@ -27,10 +29,13 @@ public class PdfPedidoTemplate {
             """.formatted(
                     item.getNomeProduto(),
                     item.getQuantidade(),
-                    moedaBR.format(item.getPrecoUnitario()),
-                    moedaBR.format(item.getSubtotal())
+                    moedaBR.format(item.getPrecoUnitario().getValor()),
+                    moedaBR.format(item.getSubtotal().getValor())
             ));
         }
+        String freteInfo = Boolean.TRUE.equals(pedido.getFreteGratis())
+                ? "Grátis"
+                : (pedido.getValorFrete() != null ? moedaBR.format(pedido.getValorFrete().getValor()) : "R$ 0,00");
 
         String html = """
         <html>
@@ -44,18 +49,24 @@ public class PdfPedidoTemplate {
         .center { text-align:center; }
         .produto { font-weight:bold; }
         .destaque { font-weight:bold; color:#ef4444; }
+        .label { color:#666; font-size:0.9em; }
         </style>
         </head>
         <body>
 
         <h2>Pedido #%s</h2>
-        <p>Status: %s</p>
+        <p><b>Status:</b> %s</p>
+        <p><b>Tipo de Entrega:</b> %s</p>
+        <p><b>Data:</b> %s</p>
 
         <h3>Cliente</h3>
         <p><b>Nome:</b> %s</p>
+        <p><b>Email:</b> %s</p>
         <p><b>Telefone:</b> %s</p>
         <p><b>Endereço:</b> %s</p>
         <p><b>Bairro:</b> %s</p>
+        <p><b>Complemento:</b> %s</p>
+        <p><b>Observação:</b> %s</p>
 
         <h3>Itens</h3>
         <table>
@@ -72,21 +83,40 @@ public class PdfPedidoTemplate {
             </tbody>
         </table>
 
-        <h3 style="text-align:right;">
-            Total do Pedido: %s
-        </h3>
+        <br/>
+        <table style="width:40%%; margin-left:auto;">
+            <tr>
+                <td>Total Produtos:</td>
+                <td class="right">%s</td>
+            </tr>
+            <tr>
+                <td>Frete:</td>
+                <td class="right">%s</td>
+            </tr>
+            <tr>
+                <td><b>Total Final:</b></td>
+                <td class="right destaque">%s</td>
+            </tr>
+        </table>
 
         </body>
         </html>
         """.formatted(
                 pedido.getId(),
-                pedido.getStatus(),
+                pedido.getStatus().name(),
+                pedido.getTipoEntrega().name(),
+                pedido.getCriadoEm().format(fmt),
                 pedido.getNomeCliente(),
+                pedido.getEmail(),
                 pedido.getTelefone(),
                 pedido.getEndereco(),
                 pedido.getBairro(),
+                pedido.getComplemento() != null ? pedido.getComplemento() : "-",
+                pedido.getObservacao() != null ? pedido.getObservacao() : "-",
                 itensHtml.toString(),
-                moedaBR.format(pedido.getTotalFinal())
+                moedaBR.format(pedido.getTotalProdutos().getValor()),
+                freteInfo,
+                moedaBR.format(pedido.getTotalFinal().getValor())
         );
 
         return html;
